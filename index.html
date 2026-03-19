@@ -4,210 +4,157 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>新莊國小 網路設備管理系統</title>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#f2f4f7;
-  --white:#ffffff;
-  --border:#b0b8c4;
-  --border-dark:#6b7a8d;
-  --text:#1a2332;
-  --text2:#4a5568;
-  --text3:#8a96a3;
-  /* building colors */
-  --A:#1a56c8; --A-bg:#e8f0fd; --A-bd:#a3bdf7;
-  --B:#15803d; --B-bg:#dcfce7; --B-bd:#86efac;
-  --F:#b45309; --F-bg:#fef3c7; --F-bd:#fcd34d;
-  --C:#7e22ce; --C-bg:#f3e8ff; --C-bd:#c4b5fd;
-  /* room types */
-  --cls:#dbeafe; --cls-b:#93c5fd;
-  --off:#fef9c3; --off-b:#fde047;
-  --lab:#d1fae5; --lab-b:#6ee7b7;
-  --spc:#ede9fe; --spc-b:#c4b5fd;
-  --sto:#f1f5f9; --sto-b:#cbd5e1;
+  --bg:#f0f2f5;--white:#fff;--border:#c0c8d4;--border2:#e2e8f0;
+  --text:#1a2332;--text2:#4a5568;--text3:#9aa5b4;
+  --A:#1a56c8;--A-bg:#e8f0fd;--A-bd:#93c5fd;
+  --B:#15803d;--B-bg:#dcfce7;--B-bd:#86efac;
+  --F:#b45309;--F-bg:#fef3c7;--F-bd:#fcd34d;
+  --C:#7e22ce;--C-bg:#f3e8ff;--C-bd:#c4b5fd;
   --mono:'JetBrains Mono',monospace;
   --sans:'Noto Sans TC',sans-serif;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{font-family:var(--sans);background:var(--bg);color:var(--text);overflow-x:auto}
-
-/* ── TOP BAR ── */
-.topbar{position:sticky;top:0;z-index:200;background:var(--white);border-bottom:2px solid var(--border);display:flex;align-items:center;gap:0;padding:0 16px;height:48px;box-shadow:0 2px 8px rgba(0,0,0,.08)}
-.logo{font-size:14px;font-weight:900;color:var(--text);letter-spacing:-.02em;margin-right:16px;white-space:nowrap}
+body{font-family:var(--sans);background:var(--bg);color:var(--text);font-size:12px}
+.bar{position:sticky;top:0;z-index:200;background:var(--white);border-bottom:2px solid var(--border);display:flex;align-items:center;padding:0 14px;height:44px;box-shadow:0 2px 5px rgba(0,0,0,.07);gap:0}
+.logo{font-size:13px;font-weight:900;color:var(--text);margin-right:12px;white-space:nowrap}
 .logo em{color:var(--A);font-style:normal}
 .nav{display:flex;gap:0}
-.ntab{padding:0 14px;height:48px;display:flex;align-items:center;border:none;background:none;font-family:var(--sans);font-size:12px;color:var(--text2);cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px;white-space:nowrap;transition:all .15s}
+.ntab{padding:0 12px;height:44px;display:flex;align-items:center;border:none;background:none;font-family:var(--sans);font-size:12px;color:var(--text2);cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px;white-space:nowrap;transition:all .15s}
 .ntab:hover{color:var(--text);background:#f8f9fa}
 .ntab.on{color:var(--A);border-bottom-color:var(--A);font-weight:700}
-.tb-right{margin-left:auto;display:flex;align-items:center;gap:8px}
-.srch-box{display:flex;align-items:center;gap:5px;background:var(--bg);border:1px solid var(--border);border-radius:5px;padding:4px 9px}
-.srch-box input{background:none;border:none;outline:none;font-family:var(--sans);font-size:12px;width:160px;color:var(--text)}
-.srch-box input::placeholder{color:var(--text3)}
-.exp-btn{padding:5px 12px;background:var(--white);border:1px solid var(--border);border-radius:5px;font-size:11px;cursor:pointer;color:var(--text2);font-family:var(--sans);transition:all .15s;white-space:nowrap}
-.exp-btn:hover{border-color:var(--A);color:var(--A)}
-
-/* ── VIEWS ── */
+.bar-r{margin-left:auto;display:flex;align-items:center;gap:6px}
+.sq{display:flex;align-items:center;gap:5px;background:var(--bg);border:1px solid var(--border);border-radius:5px;padding:4px 9px}
+.sq input{background:none;border:none;outline:none;font-family:var(--sans);font-size:12px;width:150px;color:var(--text)}
+.sq input::placeholder{color:var(--text3)}
+.xbtn{padding:4px 10px;background:var(--white);border:1px solid var(--border);border-radius:5px;font-size:11px;cursor:pointer;color:var(--text2);font-family:var(--sans);transition:all .15s;white-space:nowrap}
+.xbtn:hover{border-color:var(--A);color:var(--A)}
 .view{display:none}
 .view.on{display:block}
-#v-plan{padding:16px}
-#v-net{height:calc(100vh - 48px);display:none;flex-direction:row}
 #v-net.on{display:flex}
-#v-people{padding:16px}
-#v-search{padding:24px;max-width:700px;margin:0 auto}
+#v-net{height:calc(100vh - 44px);flex-direction:row}
 
-/* ── LEGEND ── */
-.legend-bar{display:flex;align-items:center;gap:12px;margin-bottom:10px;flex-wrap:wrap;font-size:11px;color:var(--text2)}
-.lg{display:flex;align-items:center;gap:4px}
-.lg-sq{width:12px;height:12px;border-radius:2px;border:1.5px solid}
+/* ── PLAN ── */
+#v-plan{padding:12px 14px 24px;overflow-x:auto}
+.legend{display:flex;align-items:center;gap:9px;margin-bottom:11px;flex-wrap:wrap;font-size:10px;color:var(--text2);background:var(--white);border:1px solid var(--border2);border-radius:6px;padding:6px 11px}
+.lg{display:flex;align-items:center;gap:3px}
+.lgsq{width:9px;height:9px;border-radius:2px;border:1.5px solid}
 
-/* ── MAIN FLOOR TABLE ── */
-.school-wrap{overflow-x:auto}
-.school-table{border-collapse:collapse;font-size:11px;background:var(--white);white-space:nowrap;table-layout:fixed}
-.school-table td,.school-table th{border:1.5px solid var(--border);padding:0;vertical-align:top}
+/* building block stacked vertically */
+.bblock{margin-bottom:18px;width:max-content}
+.bhdr{display:flex;align-items:center;gap:8px;padding:6px 11px;color:#fff;font-size:13px;font-weight:700;letter-spacing:.04em;border-radius:5px 5px 0 0}
+.bF .bhdr{background:var(--F)}
+.bB .bhdr{background:var(--B)}
+.bA .bhdr{background:var(--A)}
+.bC .bhdr{background:var(--C)}
 
-/* building header row */
-.bh{background:var(--text);color:#fff;font-size:12px;font-weight:700;text-align:center;padding:5px 8px;letter-spacing:.08em;border:1.5px solid #333!important}
-.bh-A{background:var(--A)}
-.bh-B{background:var(--B)}
-.bh-F{background:var(--F)}
-.bh-C{background:var(--C)}
-
-/* floor label cell */
-.fl{background:var(--text);color:#fff;font-size:10px;font-weight:700;padding:4px 6px;text-align:center;writing-mode:horizontal-tb;min-width:26px;width:26px;letter-spacing:.05em;border:1.5px solid #333!important}
-.fl-B1{background:#374151}
-
-/* spacer between buildings */
-.sp{background:var(--bg);width:10px;min-width:10px;border:1.5px solid var(--border-dark)!important}
-.sp-tall{background:var(--bg);border:1.5px solid var(--border-dark)!important}
+/* floor table */
+.ftbl{border-collapse:collapse;background:var(--white);border:2px solid var(--border)}
+.ftbl td,.ftbl th{border:1.5px solid var(--border);padding:0;vertical-align:top}
+.fl{background:var(--text);color:#fff;font-size:10px;font-weight:700;padding:3px 6px;text-align:center;width:26px;min-width:26px;border:1.5px solid #333!important;white-space:nowrap}
+.sep{width:7px;min-width:7px;background:#d1d5db;border:1.5px solid var(--border)!important}
 
 /* room cell */
-.rm{padding:5px 6px;cursor:pointer;min-width:100px;width:100px;min-height:62px;height:62px;position:relative;transition:filter .12s;vertical-align:top}
-.rm:hover{filter:brightness(.93)}
-.rm.cls{background:var(--cls);border-left:3px solid var(--cls-b)!important}
-.rm.off{background:var(--off);border-left:3px solid var(--off-b)!important}
-.rm.lab{background:var(--lab);border-left:3px solid var(--lab-b)!important}
-.rm.spc{background:var(--spc);border-left:3px solid var(--spc-b)!important}
-.rm.sto{background:var(--sto);border-left:3px solid var(--sto-b)!important}
-.rm.wide{min-width:200px;width:200px}
-.rm.np{background:#fef2f2;border-left:3px solid #fca5a5!important;cursor:default}
-
-.rm-id{font-family:var(--mono);font-size:8px;color:var(--text3);line-height:1;margin-bottom:2px}
-.rm-name{font-size:11px;font-weight:600;color:var(--text);line-height:1.25;margin-bottom:2px}
-.rm-ext{font-size:9px;color:var(--text2);font-family:var(--mono)}
-.rm-note{font-size:8px;color:#ef4444;margin-top:1px}
-.rm-ips{display:flex;flex-wrap:wrap;gap:2px;position:absolute;bottom:4px;right:5px}
-.ipdot{width:5px;height:5px;border-radius:50%}
-.ipdot.f{background:var(--B)}
-.ipdot.e{background:#d1d5db}
-.ipdot.ap{background:var(--A)}
-
-/* empty/parking cells */
-.empty{background:repeating-linear-gradient(45deg,var(--bg) 0,var(--bg) 4px,#e5e7eb 4px,#e5e7eb 8px);cursor:default}
-.park{background:#e5e7eb;cursor:default;text-align:center;vertical-align:middle;font-size:10px;color:var(--text3);font-weight:600;writing-mode:vertical-rl;letter-spacing:.2em}
+.rm{padding:4px 6px;cursor:pointer;min-width:98px;width:98px;min-height:60px;position:relative;transition:filter .1s}
+.rm:hover{filter:brightness(.91)}
+.rm.cls{background:#dbeafe;border-left:3px solid #60a5fa!important}
+.rm.off{background:#fefce8;border-left:3px solid #fbbf24!important}
+.rm.lab{background:#d1fae5;border-left:3px solid #34d399!important}
+.rm.spc{background:#ede9fe;border-left:3px solid #a78bfa!important}
+.rm.sto{background:#f1f5f9;border-left:3px solid #94a3b8!important;cursor:default}
+.rm-id{font-family:var(--mono);font-size:7.5px;color:var(--text3);line-height:1;margin-bottom:1px}
+.rm-name{font-size:11px;font-weight:700;color:var(--text);line-height:1.25}
+.rm-sub{font-size:9px;color:var(--text2)}
+.rm-ext{font-size:9px;color:var(--text2);font-family:var(--mono);margin-top:1px}
+.rm-note{font-size:8px;color:#ef4444}
+.rm-dots{position:absolute;bottom:3px;right:3px;display:flex;gap:2px}
+.dot{width:5px;height:5px;border-radius:50%}
+.dot-ip{background:var(--B)}.dot-ap{background:var(--A)}.dot-e{background:#e2e8f0}
+.ec{background:repeating-linear-gradient(45deg,var(--bg),var(--bg) 3px,#e2e8f0 3px,#e2e8f0 6px);min-width:98px;width:98px;min-height:60px}
 
 /* switch row */
-.sw-row td{background:#f0f4ff;padding:3px 6px;font-size:10px;border:1px solid var(--A-bd)!important}
-.sw-cell{display:flex;align-items:center;gap:5px;flex-wrap:wrap}
-.sw-ip{font-family:var(--mono);font-size:10px;background:var(--white);border:1px solid var(--A-bd);border-radius:3px;padding:1px 5px;outline:none;width:120px;color:var(--A)}
-.sw-ip:focus{border-color:var(--A)}
-label.sw-lbl{display:flex;align-items:center;gap:3px;font-size:10px;color:var(--A);cursor:pointer}
+.swrow td{background:#f0f4ff;border:1px solid var(--A-bd)!important;padding:4px 8px}
+.sw-cell{display:flex;align-items:center;gap:6px;font-size:10px}
+.sw-cell label{display:flex;align-items:center;gap:3px;color:var(--A);cursor:pointer;white-space:nowrap}
+.swip{font-family:var(--mono);font-size:10px;background:var(--white);border:1px solid var(--A-bd);border-radius:3px;padding:2px 6px;outline:none;width:120px;color:var(--A)}
+.swip:focus{border-color:var(--A)}
 
 /* ── MODAL ── */
-.overlay{position:fixed;inset:0;background:rgba(15,20,35,.55);z-index:500;display:none;align-items:center;justify-content:center;backdrop-filter:blur(2px)}
-.overlay.on{display:flex}
-.modal{background:var(--white);border-radius:10px;width:480px;max-width:96vw;max-height:90vh;overflow-y:auto;box-shadow:0 24px 64px rgba(0,0,0,.25)}
-.mhdr{display:flex;align-items:flex-start;justify-content:space-between;padding:14px 18px;border-bottom:1px solid #e5e7eb;position:sticky;top:0;background:var(--white);z-index:1}
-.mhdr-l .mname{font-size:15px;font-weight:700}
-.mhdr-l .mmeta{font-size:10px;color:var(--text2);font-family:var(--mono);margin-top:2px}
-.mcls-btn{background:none;border:none;font-size:17px;color:var(--text3);cursor:pointer;padding:2px 5px;border-radius:3px}
-.mcls-btn:hover{background:#f3f4f6}
-.mbody{padding:16px 18px;display:flex;flex-direction:column;gap:12px}
-.fsec{border:1px solid #e5e7eb;border-radius:7px;overflow:hidden}
-.fsec-t{background:#f9fafb;padding:5px 11px;font-size:10px;font-weight:700;color:var(--text2);letter-spacing:.07em;text-transform:uppercase;border-bottom:1px solid #e5e7eb;display:flex;align-items:center;gap:5px}
-.frow{display:flex;align-items:center;gap:8px;padding:7px 11px;border-bottom:1px solid #f3f4f6}
+.ovl{position:fixed;inset:0;background:rgba(10,15,25,.48);z-index:500;display:none;align-items:center;justify-content:center;backdrop-filter:blur(2px)}
+.ovl.on{display:flex}
+.modal{background:var(--white);border-radius:9px;width:460px;max-width:96vw;max-height:90vh;overflow-y:auto;box-shadow:0 20px 50px rgba(0,0,0,.22)}
+.mhdr{padding:12px 16px;border-bottom:1px solid var(--border2);display:flex;align-items:flex-start;justify-content:space-between;position:sticky;top:0;background:var(--white);z-index:1}
+.mttl{font-size:14px;font-weight:700}
+.mmeta{font-size:10px;color:var(--text2);font-family:var(--mono);margin-top:2px}
+.mcls{background:none;border:none;font-size:16px;color:var(--text3);cursor:pointer;padding:1px 4px;border-radius:3px}
+.mcls:hover{background:var(--bg)}
+.mbody{padding:14px 16px;display:flex;flex-direction:column;gap:10px}
+.fsec{border:1px solid var(--border2);border-radius:6px;overflow:hidden}
+.fst{background:#f9fafb;padding:5px 10px;font-size:10px;font-weight:700;color:var(--text2);letter-spacing:.06em;text-transform:uppercase;border-bottom:1px solid var(--border2)}
+.frow{display:flex;align-items:center;gap:7px;padding:6px 10px;border-bottom:1px solid #f3f4f6}
 .frow:last-child{border-bottom:none}
-.flbl{font-size:11px;color:var(--text2);width:84px;flex-shrink:0}
-.fin{flex:1;background:#f9fafb;border:1px solid #e5e7eb;border-radius:5px;padding:5px 9px;font-family:var(--mono);font-size:12px;color:var(--text);outline:none}
+.flbl{font-size:11px;color:var(--text2);width:80px;flex-shrink:0}
+.fin{flex:1;background:#f9fafb;border:1px solid var(--border2);border-radius:4px;padding:5px 8px;font-family:var(--mono);font-size:12px;color:var(--text);outline:none}
 .fin:focus{border-color:var(--A)}
 .fin::placeholder{color:var(--text3)}
-.tog-wrap{display:flex;align-items:center;gap:7px}
-.tog{width:34px;height:18px;position:relative;flex-shrink:0}
+.togwrap{display:flex;align-items:center;gap:6px}
+.tog{width:32px;height:17px;position:relative;flex-shrink:0}
 .tog input{opacity:0;width:0;height:0;position:absolute}
-.tog-sl{position:absolute;inset:0;background:#d1d5db;border-radius:9px;cursor:pointer;transition:.2s}
-.tog-sl::after{content:'';position:absolute;width:12px;height:12px;border-radius:50%;background:#fff;top:3px;left:3px;transition:.2s;box-shadow:0 1px 3px rgba(0,0,0,.2)}
-.tog input:checked+.tog-sl{background:var(--A)}
-.tog input:checked+.tog-sl::after{transform:translateX(16px)}
-.mfoot{padding:10px 18px;border-top:1px solid #e5e7eb;display:flex;justify-content:flex-end;gap:7px;position:sticky;bottom:0;background:var(--white)}
-.btn{padding:6px 16px;border-radius:5px;border:none;font-family:var(--sans);font-size:12px;cursor:pointer;font-weight:600;transition:all .15s}
-.btn-p{background:var(--A);color:#fff}.btn-p:hover{background:#1347a0}
-.btn-g{background:#f3f4f6;color:var(--text2);border:1px solid #e5e7eb}.btn-g:hover{border-color:#9ca3af}
+.tsl{position:absolute;inset:0;background:#d1d5db;border-radius:9px;cursor:pointer;transition:.2s}
+.tsl::after{content:'';position:absolute;width:11px;height:11px;border-radius:50%;background:#fff;top:3px;left:3px;transition:.2s}
+.tog input:checked+.tsl{background:var(--A)}
+.tog input:checked+.tsl::after{transform:translateX(15px)}
+.mfoot{padding:9px 16px;border-top:1px solid var(--border2);display:flex;justify-content:flex-end;gap:6px;position:sticky;bottom:0;background:var(--white)}
+.btn{padding:5px 14px;border-radius:4px;border:none;font-family:var(--sans);font-size:12px;cursor:pointer;font-weight:600;transition:all .15s}
+.btnp{background:var(--A);color:#fff}.btnp:hover{background:#1347a0}
+.btng{background:var(--bg);color:var(--text2);border:1px solid var(--border)}.btng:hover{border-color:var(--text2)}
 
-/* ── NETWORK VIEW ── */
-.net-side{width:200px;flex-shrink:0;background:#0d1117;border-right:1px solid #21262d;display:flex;flex-direction:column;overflow:hidden}
-.net-side-hdr{padding:10px 12px;border-bottom:1px solid #21262d;font-size:11px;font-weight:700;color:#8b949e}
-.net-tools{padding:8px;display:flex;flex-direction:column;gap:4px;border-bottom:1px solid #21262d}
-.nt-btn{padding:6px 10px;border-radius:5px;border:1px solid #21262d;background:none;color:#8b949e;font-family:var(--sans);font-size:11px;cursor:pointer;text-align:left;display:flex;align-items:center;gap:5px;transition:all .15s}
-.nt-btn:hover{border-color:#388bfd;color:#c9d1d9}
-.nt-btn.on{border-color:#58a6ff;color:#58a6ff;background:rgba(88,166,255,.1)}
-.nt-btn.del{border-color:#3d1515;color:#f85149}
-.nt-btn.del:hover{border-color:#f85149;background:rgba(248,81,73,.1)}
-.net-legend{padding:10px 12px;font-size:10px;color:#484f58;line-height:2;flex:1;overflow-y:auto}
-.nl-item{display:flex;align-items:center;gap:6px;margin-bottom:4px}
-.nl-line{height:2px;width:22px;border-radius:1px}
-.net-area{flex:1;position:relative;overflow:hidden;background:#0d1117}
-#svg-net{width:100%;height:100%;min-width:600px;min-height:400px}
+/* ── NETWORK ── */
+.nside{width:190px;flex-shrink:0;background:#0d1117;border-right:1px solid #21262d;display:flex;flex-direction:column}
+.nshdr{padding:8px 11px;border-bottom:1px solid #21262d;font-size:11px;font-weight:700;color:#8b949e}
+.ntools{padding:6px;display:flex;flex-direction:column;gap:3px;border-bottom:1px solid #21262d}
+.ntb{padding:5px 9px;border-radius:4px;border:1px solid #21262d;background:none;color:#8b949e;font-family:var(--sans);font-size:11px;cursor:pointer;text-align:left;display:flex;align-items:center;gap:5px;transition:all .15s}
+.ntb:hover{border-color:#388bfd;color:#c9d1d9}
+.ntb.on{border-color:#58a6ff;color:#58a6ff;background:rgba(88,166,255,.1)}
+.ntb.del{border-color:#3d1515;color:#f85149}.ntb.del:hover{border-color:#f85149;background:rgba(248,81,73,.1)}
+.nleg{padding:8px 11px;font-size:10px;color:#484f58;flex:1;overflow-y:auto}
+.nli{display:flex;align-items:center;gap:5px;margin-bottom:4px}
+.nll{height:2px;width:18px;border-radius:1px}
+.narea{flex:1;position:relative;overflow:hidden;background:#0d1117}
+#svgnet{width:100%;height:100%}
 
-/* PEOPLE TABLE */
-.ppl-wrap{background:var(--white);border:1px solid var(--border);border-radius:8px;overflow:hidden;max-width:900px}
-table.ppl{width:100%;border-collapse:collapse}
-table.ppl th{background:#f9fafb;padding:7px 10px;font-size:10px;color:var(--text2);font-weight:700;letter-spacing:.06em;text-transform:uppercase;border-bottom:1px solid #e5e7eb;text-align:left}
-table.ppl td{padding:6px 10px;border-bottom:1px solid #f3f4f6;vertical-align:middle;font-size:12px}
-table.ppl tr:last-child td{border-bottom:none}
-table.ppl tr:hover td{background:#f9fafb}
-.sel-sm{background:#f9fafb;border:1px solid #e5e7eb;border-radius:4px;color:var(--text);padding:3px 5px;font-size:11px;font-family:var(--sans);outline:none;cursor:pointer;max-width:150px}
-.ip-sm{background:#f9fafb;border:1px solid #e5e7eb;border-radius:4px;color:var(--A);font-family:var(--mono);font-size:11px;padding:3px 7px;outline:none;width:140px}
-.ip-sm:focus,.sel-sm:focus{border-color:var(--A)}
-.dot{width:6px;height:6px;border-radius:50%;display:inline-block}
-.dot.on{background:#16a34a}.dot.off{background:#d1d5db}
+/* PEOPLE */
+.ptblw{background:var(--white);border:1px solid var(--border);border-radius:7px;overflow:hidden;max-width:860px}
+.ptbl{width:100%;border-collapse:collapse}
+.ptbl th{background:#f9fafb;padding:6px 9px;font-size:10px;color:var(--text2);font-weight:700;letter-spacing:.05em;text-transform:uppercase;border-bottom:1px solid var(--border2);text-align:left}
+.ptbl td{padding:5px 9px;border-bottom:1px solid #f5f6f7;vertical-align:middle;font-size:12px}
+.ptbl tr:last-child td{border-bottom:none}
+.ptbl tr:hover td{background:#fafbfc}
+.psel{background:#f9fafb;border:1px solid var(--border2);border-radius:3px;color:var(--text);padding:2px 4px;font-size:11px;font-family:var(--sans);outline:none;cursor:pointer;max-width:155px}
+.pip{background:#f9fafb;border:1px solid var(--border2);border-radius:3px;color:var(--A);font-family:var(--mono);font-size:11px;padding:2px 6px;outline:none;width:140px}
+.pip:focus,.psel:focus{border-color:var(--A)}
+.pdot{width:6px;height:6px;border-radius:50%;display:inline-block}
+.pdot.on{background:#16a34a}.pdot.off{background:#d1d5db}
 
 /* SEARCH */
-.srch-big{display:flex;align-items:center;gap:8px;background:var(--white);border:2px solid var(--border);border-radius:8px;padding:10px 14px;margin-bottom:16px}
-.srch-big:focus-within{border-color:var(--A)}
-.srch-big input{flex:1;background:none;border:none;outline:none;font-size:14px;font-family:var(--sans);color:var(--text)}
-.srch-big input::placeholder{color:var(--text3)}
-.sr-card{background:var(--white);border:1px solid var(--border);border-radius:7px;padding:11px 14px;margin-bottom:8px;cursor:pointer;transition:all .15s}
-.sr-card:hover{border-color:var(--A);transform:translateX(3px)}
-.sr-id{font-family:var(--mono);font-size:9px;background:#f3f4f6;padding:1px 5px;border-radius:2px;border:1px solid #e5e7eb}
-.sr-nm{font-size:13px;font-weight:600;margin:0 6px}
-.sr-ext{font-family:var(--mono);font-size:9px;color:var(--F)}
-.sr-ip{font-family:var(--mono);font-size:11px;color:var(--B);margin-top:4px}
-.sr-loc{font-size:10px;color:var(--text2);margin-top:2px}
+.sbig{display:flex;align-items:center;gap:7px;background:var(--white);border:2px solid var(--border);border-radius:7px;padding:9px 12px;margin-bottom:12px}
+.sbig:focus-within{border-color:var(--A)}
+.sbig input{flex:1;background:none;border:none;outline:none;font-size:14px;font-family:var(--sans);color:var(--text)}
+.sbig input::placeholder{color:var(--text3)}
+.scard{background:var(--white);border:1px solid var(--border);border-radius:6px;padding:9px 12px;margin-bottom:6px;cursor:pointer;transition:all .15s}
+.scard:hover{border-color:var(--A);transform:translateX(2px)}
+.sid{font-family:var(--mono);font-size:9px;background:var(--bg);padding:1px 4px;border-radius:2px;border:1px solid var(--border)}
+.snm{font-size:13px;font-weight:600;margin:0 5px}
+.sxt{font-family:var(--mono);font-size:9px;color:var(--F)}
+.sip{font-family:var(--mono);font-size:11px;color:var(--B);margin-top:3px}
+.sloc{font-size:10px;color:var(--text2);margin-top:2px}
 mark{background:rgba(26,86,200,.12);color:var(--A);border-radius:2px;padding:0 1px}
-
-/* CONN MODAL */
-.conn-modal{background:#161b22;border:1px solid #30363d;border-radius:9px;width:320px;max-width:96vw}
-.conn-modal .mhdr{background:#161b22;border-color:#30363d}
-.conn-modal .mname{color:#c9d1d9}
-.conn-modal .mmeta{color:#484f58}
-.conn-modal .mcls-btn{color:#484f58}
-.conn-modal .mbody{background:#161b22}
-.conn-modal .fsec{border-color:#30363d}
-.conn-modal .fsec-t{background:#0d1117;border-color:#30363d;color:#484f58}
-.conn-modal .frow{border-color:#21262d}
-.conn-modal .flbl{color:#484f58}
-.conn-modal .fin{background:#0d1117;border-color:#30363d;color:#c9d1d9}
-.conn-modal .fin:focus{border-color:#58a6ff}
-.conn-modal select.fin{cursor:pointer}
-.conn-modal .mfoot{background:#161b22;border-color:#30363d}
-.conn-modal .btn-p{background:#238636;color:#fff}
-.conn-modal .btn-p:hover{background:#2ea043}
-.conn-modal .btn-g{background:#21262d;border-color:#30363d;color:#8b949e}
 </style>
 </head>
 <body>
-
-<div class="topbar">
+<div class="bar">
   <div class="logo">🏫 新莊國小<em>｜</em>網路設備管理</div>
   <nav class="nav">
     <button class="ntab on" data-v="plan" onclick="sv('plan')">📐 校園配置圖</button>
@@ -215,106 +162,105 @@ mark{background:rgba(26,86,200,.12);color:var(--A);border-radius:2px;padding:0 1
     <button class="ntab" data-v="people" onclick="sv('people')">👤 人員</button>
     <button class="ntab" data-v="search" onclick="sv('search')">🔍 搜尋</button>
   </nav>
-  <div class="tb-right">
-    <div class="srch-box"><span>🔍</span><input placeholder="快速搜尋..." oninput="qs(this.value)"></div>
-    <button class="exp-btn" onclick="exportAll()">📥 匯出 CSV</button>
+  <div class="bar-r">
+    <div class="sq"><span>🔍</span><input placeholder="快速搜尋..." oninput="qs(this.value)"></div>
+    <button class="xbtn" onclick="exportAll()">📥 匯出CSV</button>
   </div>
 </div>
 
-<!-- ═══ PLAN ═══ -->
+<!-- PLAN -->
 <div id="v-plan" class="view on">
-  <div style="padding:12px 16px 0">
-    <div class="legend-bar">
-      <strong style="font-size:12px">凡例：</strong>
-      <span class="lg"><span class="lg-sq" style="background:var(--cls);border-color:var(--cls-b)"></span>普通教室</span>
-      <span class="lg"><span class="lg-sq" style="background:var(--off);border-color:var(--off-b)"></span>辦公室</span>
-      <span class="lg"><span class="lg-sq" style="background:var(--lab);border-color:var(--lab-b)"></span>電腦/e化</span>
-      <span class="lg"><span class="lg-sq" style="background:var(--spc);border-color:var(--spc-b)"></span>專科/特殊</span>
-      <span class="lg"><span class="lg-sq" style="background:var(--sto);border-color:var(--sto-b)"></span>儲藏/其他</span>
-      <span class="lg"><span class="ipdot f" style="width:8px;height:8px"></span>已填IP</span>
-      <span class="lg"><span class="ipdot ap" style="width:8px;height:8px"></span>AP已設</span>
-      <span style="margin-left:8px;font-size:11px;color:var(--text3)">點擊任何教室格可設定IP・⇌=本層交換機</span>
-    </div>
+  <div class="legend">
+    <strong style="font-size:10px;margin-right:2px">凡例：</strong>
+    <span class="lg"><span class="lgsq" style="background:#dbeafe;border-color:#60a5fa"></span>普通教室</span>
+    <span class="lg"><span class="lgsq" style="background:#fefce8;border-color:#fbbf24"></span>辦公室</span>
+    <span class="lg"><span class="lgsq" style="background:#d1fae5;border-color:#34d399"></span>電腦/e化</span>
+    <span class="lg"><span class="lgsq" style="background:#ede9fe;border-color:#a78bfa"></span>專科/特殊</span>
+    <span class="lg"><span class="lgsq" style="background:#f1f5f9;border-color:#94a3b8"></span>儲藏/其他</span>
+    <span class="lg"><span class="dot dot-ip" style="width:7px;height:7px;border-radius:50%;display:inline-block;background:#15803d"></span>已填IP</span>
+    <span class="lg"><span class="dot dot-ap" style="width:7px;height:7px;border-radius:50%;display:inline-block;background:#1a56c8"></span>AP已設</span>
+    <span style="margin-left:auto;font-size:10px;color:var(--text3)">點擊任意教室格 → 設定IP與設備資訊</span>
   </div>
-  <div style="padding:0 16px 16px;overflow-x:auto">
-    <div id="planTable"></div>
-  </div>
+  <div id="planArea"></div>
 </div>
 
-<!-- ═══ NET ═══ -->
+<!-- NET -->
 <div id="v-net" class="view">
-  <div class="net-side">
-    <div class="net-side-hdr">🔌 網路架構</div>
-    <div class="net-tools">
-      <button class="nt-btn on" id="tb-sel" onclick="setMode('sel')">👆 選取</button>
-      <button class="nt-btn" id="tb-conn" onclick="setMode('conn')">🔗 接線</button>
-      <button class="nt-btn del" onclick="delSel()">🗑 刪除選取</button>
+  <div class="nside">
+    <div class="nshdr">🔌 網路架構圖</div>
+    <div class="ntools">
+      <button class="ntb on" id="tb-sel" onclick="nm('sel')">👆 選取</button>
+      <button class="ntb" id="tb-conn" onclick="nm('conn')">🔗 接線</button>
+      <button class="ntb del" onclick="delSel()">🗑 刪除選取</button>
     </div>
-    <div style="padding:8px 12px;border-bottom:1px solid #21262d">
-      <div style="font-size:10px;color:#484f58;margin-bottom:5px;font-weight:700">篩選棟樓</div>
-      <div style="display:flex;flex-wrap:wrap;gap:3px" id="netBldgFilters"></div>
+    <div style="padding:7px 11px;border-bottom:1px solid #21262d">
+      <div style="font-size:9px;color:#484f58;margin-bottom:4px;font-weight:700">顯示棟樓</div>
+      <div style="display:flex;flex-wrap:wrap;gap:3px" id="nbf"></div>
     </div>
-    <div class="net-legend">
-      <div style="font-size:10px;font-weight:700;color:#8b949e;margin-bottom:6px">線路類型</div>
-      <div class="nl-item"><div class="nl-line" style="background:#58a6ff"></div>網路線 Cat5e/6</div>
-      <div class="nl-item"><div class="nl-line" style="background:#f0b429"></div>光纖</div>
-      <div class="nl-item"><div class="nl-line" style="background:#3fb950"></div>主幹 Trunk</div>
-      <div class="nl-item"><div class="nl-line" style="background:#a78bfa"></div>Wi-Fi AP</div>
-      <div class="nl-item"><div class="nl-line" style="background:#f85149;background:repeating-linear-gradient(90deg,#f85149 0,#f85149 5px,transparent 5px,transparent 9px)"></div>跨棟</div>
-      <div style="margin-top:10px;font-size:10px;font-weight:700;color:#8b949e;margin-bottom:6px">說明</div>
-      <div style="font-size:9px;color:#30363d;line-height:1.8">接線模式：點第1節點→點第2節點→填資訊<br>選取後按刪除可移除線路</div>
+    <div class="nleg">
+      <div style="font-size:10px;font-weight:700;color:#8b949e;margin-bottom:5px">線路類型</div>
+      <div class="nli"><div class="nll" style="background:#58a6ff"></div>網路線 Cat5e/6</div>
+      <div class="nli"><div class="nll" style="background:#f0b429"></div>光纖</div>
+      <div class="nli"><div class="nll" style="background:#3fb950"></div>主幹 Trunk</div>
+      <div class="nli"><div class="nll" style="background:#a78bfa"></div>Wi-Fi AP</div>
+      <div class="nli"><div class="nll" style="background:#f85149"></div>跨棟連接</div>
+      <div style="margin-top:9px;font-size:9px;color:#30363d;line-height:1.9">接線：點「接線」→點第1節點→點第2節點→填資訊<br>點線路可刪除</div>
     </div>
   </div>
-  <div class="net-area"><svg id="svg-net" xmlns="http://www.w3.org/2000/svg"></svg></div>
+  <div class="narea" id="narea">
+    <svg id="svgnet" xmlns="http://www.w3.org/2000/svg" style="overflow:visible"></svg>
+    <div id="nst" style="position:absolute;top:8px;left:50%;transform:translateX(-50%);background:rgba(88,166,255,.15);border:1px solid rgba(88,166,255,.35);color:#58a6ff;padding:4px 12px;border-radius:12px;font-size:10px;pointer-events:none;font-family:'JetBrains Mono';opacity:0;transition:opacity .2s;white-space:nowrap"></div>
+  </div>
 </div>
 
-<!-- ═══ PEOPLE ═══ -->
-<div id="v-people" class="view">
-  <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
-    <h2 style="font-size:14px;font-weight:700">👤 人員管理</h2>
-    <button class="exp-btn" onclick="exportPpl()">📥 匯出CSV</button>
+<!-- PEOPLE -->
+<div id="v-people" class="view" style="padding:12px 14px 24px">
+  <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+    <h2 style="font-size:13px;font-weight:700">👤 人員管理</h2>
+    <button class="xbtn" onclick="exportPpl()">📥 匯出CSV</button>
   </div>
-  <div class="ppl-wrap">
-    <table class="ppl">
+  <div class="ptblw">
+    <table class="ptbl">
       <thead><tr><th></th><th>職稱</th><th>姓名</th><th>所屬辦公室</th><th>電腦 IP</th></tr></thead>
-      <tbody id="pplBody"></tbody>
+      <tbody id="pplB"></tbody>
     </table>
   </div>
 </div>
 
-<!-- ═══ SEARCH ═══ -->
-<div id="v-search" class="view">
-  <div class="srch-big"><span style="font-size:18px">🔍</span><input id="srchIn" placeholder="輸入教室名稱、代碼、IP位址、分機號碼..." oninput="doSearch(this.value)"></div>
-  <div id="srchRes"><div style="text-align:center;color:var(--text3);padding:30px;font-size:13px">輸入關鍵字開始搜尋</div></div>
+<!-- SEARCH -->
+<div id="v-search" class="view" style="padding:20px;max-width:660px;margin:0 auto">
+  <div class="sbig"><span style="font-size:16px">🔍</span><input id="srI" placeholder="教室名稱、代碼、IP位址、分機..." oninput="doSearch(this.value)"></div>
+  <div id="srR"><div style="text-align:center;color:var(--text3);padding:26px;font-size:12px">輸入關鍵字開始搜尋</div></div>
 </div>
 
-<!-- ═══ ROOM MODAL ═══ -->
-<div class="overlay" id="rmOvl" onclick="if(e=>e.target===document.getElementById('rmOvl'))closeRm()">
+<!-- ROOM MODAL -->
+<div class="ovl" id="rmOvl">
   <div class="modal" onclick="event.stopPropagation()">
     <div class="mhdr">
-      <div class="mhdr-l"><div class="mname" id="rmTitle"></div><div class="mmeta" id="rmMeta"></div></div>
-      <button class="mcls-btn" onclick="closeRm()">✕</button>
+      <div><div class="mttl" id="rmTtl"></div><div class="mmeta" id="rmMeta"></div></div>
+      <button class="mcls" onclick="closeRm()">✕</button>
     </div>
     <div class="mbody" id="rmBody"></div>
     <div class="mfoot">
-      <button class="btn btn-g" onclick="closeRm()">取消</button>
-      <button class="btn btn-p" onclick="saveRm()">💾 儲存</button>
+      <button class="btn btng" onclick="closeRm()">取消</button>
+      <button class="btn btnp" onclick="saveRm()">💾 儲存</button>
     </div>
   </div>
 </div>
 
-<!-- ═══ CONN MODAL ═══ -->
-<div class="overlay" id="cnOvl" onclick="if(event.target===this)closeCn()">
-  <div class="modal conn-modal" onclick="event.stopPropagation()">
-    <div class="mhdr">
-      <div class="mhdr-l"><div class="mname" id="cnTitle">設定連線</div><div class="mmeta" id="cnMeta"></div></div>
-      <button class="mcls-btn" onclick="closeCn()">✕</button>
+<!-- CONN MODAL -->
+<div class="ovl" id="cnOvl">
+  <div class="modal" style="background:#161b22;border:1px solid #30363d;width:290px" onclick="event.stopPropagation()">
+    <div class="mhdr" style="background:#161b22;border-color:#30363d">
+      <div><div class="mttl" id="cnTtl" style="color:#c9d1d9;font-size:12px"></div></div>
+      <button class="mcls" style="color:#484f58" onclick="closeCn()">✕</button>
     </div>
-    <div class="mbody">
-      <div class="fsec">
-        <div class="fsec-t">🔌 線路資訊</div>
-        <div class="frow"><span class="flbl">類型</span>
-          <select class="fin" id="cnType">
+    <div class="mbody" style="background:#161b22">
+      <div class="fsec" style="border-color:#30363d">
+        <div class="fst" style="background:#0d1117;border-color:#30363d;color:#484f58">🔌 線路設定</div>
+        <div class="frow" style="border-color:#21262d">
+          <span class="flbl" style="color:#484f58">類型</span>
+          <select class="fin" id="cnType" style="background:#0d1117;border-color:#30363d;color:#c9d1d9">
             <option value="eth">網路線 Cat5e/6</option>
             <option value="fiber">光纖</option>
             <option value="trunk">主幹 Trunk</option>
@@ -322,153 +268,70 @@ mark{background:rgba(26,86,200,.12);color:var(--A);border-radius:2px;padding:0 1
             <option value="cross">跨棟連接</option>
           </select>
         </div>
-        <div class="frow"><span class="flbl">標籤</span><input class="fin" id="cnLabel" placeholder="G0/1, VLAN10..."></div>
-        <div class="frow"><span class="flbl">頻寬</span><input class="fin" id="cnBw" placeholder="1Gbps..."></div>
+        <div class="frow" style="border-color:#21262d"><span class="flbl" style="color:#484f58">標籤</span><input class="fin" id="cnLbl" placeholder="G0/1..." style="background:#0d1117;border-color:#30363d;color:#c9d1d9"></div>
+        <div class="frow" style="border-color:#21262d"><span class="flbl" style="color:#484f58">頻寬</span><input class="fin" id="cnBw" placeholder="1Gbps..." style="background:#0d1117;border-color:#30363d;color:#c9d1d9"></div>
       </div>
     </div>
-    <div class="mfoot">
-      <button class="btn btn-g" onclick="closeCn()">取消</button>
-      <button class="btn btn-p" onclick="saveCn()">儲存</button>
+    <div class="mfoot" style="background:#161b22;border-color:#30363d">
+      <button class="btn btng" style="background:#21262d;border-color:#30363d;color:#8b949e" onclick="closeCn()">取消</button>
+      <button class="btn btnp" style="background:#238636" onclick="saveCn()">儲存</button>
     </div>
   </div>
 </div>
 
 <script>
-// ═══════════════════════════════════════════════
-// ROOM DEFINITIONS (matching PDF layout)
-// type: cls=classroom, off=office, lab=computer lab, spc=special, sto=storage
-// ═══════════════════════════════════════════════
-const BLDG = {
-  A:{name:'至善樓',col:'#1a56c8'},
-  B:{name:'至美樓',col:'#15803d'},
-  F:{name:'至誠樓',col:'#b45309'},
-  C:{name:'新莊樓',col:'#7e22ce'}
+const BLDG={F:{name:'至誠樓',col:'#b45309'},B:{name:'至美樓',col:'#15803d'},A:{name:'至善樓',col:'#1a56c8'},C:{name:'新莊樓',col:'#7e22ce'}};
+
+// ── FLOOR PLAN DATA ──────────────────────────────────────────────────────────
+// Each building: floors array (top→bottom), rooms per floor (left→right)
+// A building has left/right wings separated by a narrow column
+const PLAN={
+F:{floors:['4F','3F','2F','1F'],
+  rooms:{
+    '4F':[{id:'F404',n:'五年08班',ext:'844',t:'cls'},{id:'F403',n:'五年07班',ext:'843',t:'cls'},{id:'F402',n:'五年06班',ext:'842',t:'cls'},{id:'F401',n:'樂活教室',ext:'841',t:'spc'}],
+    '3F':[{id:'F304',n:'專科教室6',ext:'834',t:'spc'},{id:'F303',n:'三年07班',ext:'833',t:'cls'},{id:'F302',n:'三年06班',ext:'832',t:'cls'},{id:'F301',n:'三年05班',ext:'831',t:'cls'}],
+    '2F':[{id:'F204',n:'三年04班',ext:'824',t:'cls'},{id:'F203',n:'三年03班',ext:'823',t:'cls'},{id:'F202',n:'三年02班',ext:'822',t:'cls'},{id:'F201',n:'三年01班',ext:'821',t:'cls'}],
+    '1F':[{id:'F104',n:'幼稚班',ext:'814',t:'cls'},{id:'F103',n:'幼稚班',ext:'813',t:'cls'},{id:'F102',n:'附幼辦公室',ext:'812',t:'off'},{id:'F101',n:'教師備課室',ext:'811',t:'spc'},{id:'F_sp',n:'學前特教巡迴班',ext:'147',t:'spc'}]
+  }
+},
+B:{floors:['5F','4F','3F','2F','1F','B1'],
+  rooms:{
+    '5F':[{id:'B506',n:'音樂教室2',ext:'356',t:'spc'},{id:'B505',n:'準備室',ext:'355',t:'sto'},{id:'B504',n:'音樂教室1',ext:'354',t:'spc'},{id:'B503',n:'自然教室2',ext:'353',t:'spc'},{id:'B502',n:'準備室',ext:'352',t:'sto'},{id:'B501',n:'自然教室1',ext:'351',t:'spc'}],
+    '4F':[{id:'B406',n:'六年08班',ext:'346',t:'cls'},{id:'B405',n:'六年07班',ext:'345',t:'cls'},{id:'B404',n:'六年06班',ext:'344',t:'cls'},{id:'B403',n:'六年05班',ext:'343',t:'cls'},{id:'B402',n:'六年04班',ext:'342',t:'cls'},{id:'B401',n:'六年03班',ext:'341',t:'cls'},{id:'B107',n:'廚房',ext:'128',t:'sto'}],
+    '3F':[{id:'B306',n:'專科教室5',ext:'336',t:'spc'},{id:'B305',n:'五年05班',ext:'335',t:'cls'},{id:'B304',n:'五年04班',ext:'334',t:'cls'},{id:'B303',n:'五年03班',ext:'333',t:'cls'},{id:'B302',n:'五年02班',ext:'332',t:'cls'},{id:'B301',n:'五年01班',ext:'331',t:'cls'}],
+    '2F':[{id:'B206',n:'一年06班',ext:'326',t:'cls'},{id:'B205',n:'一年05班',ext:'325',t:'cls'},{id:'B204',n:'一年04班',ext:'324',t:'cls'},{id:'B203',n:'一年03班',ext:'323',t:'cls'},{id:'B202',n:'一年02班',ext:'322',t:'cls'},{id:'B201',n:'一年01班',ext:'321',t:'cls'},{id:'B_grd',n:'警衛室',ext:'130',t:'off'},{id:'B_fd',n:'幼兒園備餐室',ext:'129',t:'sto'}],
+    '1F':[{id:'B106',n:'體育器材室',ext:'316',t:'sto'},{id:'B105',n:'專科教室4',ext:'315',t:'spc'},{id:'B104',n:'專科教室3',ext:'314',t:'spc'},{id:'B103',n:'專科教室2',ext:'313',t:'spc'},{id:'B102',n:'六年02班',ext:'312',t:'cls'},{id:'B101',n:'六年01班',ext:'311',t:'cls'}],
+    'B1':[{id:'B_bb',n:'桌球教室',ext:'501',t:'spc'}]
+  }
+},
+A:{floors:['5F','4F','3F','2F','1F'],
+  left:{
+    '5F':[{id:'A507',n:'專科教室7',ext:'255',t:'spc'},{id:'A506',n:'e化教室4',sub:'教務處',ext:'254',t:'lab'},{id:'A505',n:'e化教室3',sub:'總務處',ext:'253',t:'lab'},{id:'A504',n:'點子實驗室',ext:'252',t:'lab'},{id:'A503',n:'e化教室2',sub:'學務處',ext:'251',t:'lab'}],
+    '4F':[{id:'A411',n:'四年09班',ext:'246',t:'cls'},{id:'A410',n:'四年08班',ext:'245',t:'cls'},{id:'A409',n:'四年07班',ext:'244',t:'cls'},{id:'A408',n:'四年06班',ext:'243',t:'cls'},{id:'A407',n:'資優班',ext:'242',t:'cls'},{id:'A406',n:'e化教室5',sub:'輔導處',ext:'241',t:'lab'}],
+    '3F':[{id:'A310',n:'四年05班',ext:'236',t:'cls'},{id:'A309',n:'四年04班',ext:'235',t:'cls'},{id:'A308',n:'四年03班',ext:'234',t:'cls'},{id:'A307',n:'資源班3',ext:'233',t:'spc'},{id:'A306',n:'資源班2',ext:'232',t:'spc'},{id:'A305',n:'資源班1',ext:'231',t:'spc'}],
+    '2F':[{id:'A209',n:'四年02班',ext:'226',t:'cls'},{id:'A208',n:'四年01班',ext:'225',t:'cls'},{id:'A207',n:'二年06班',ext:'224',t:'cls'},{id:'A206',n:'二年05班',ext:'223',t:'cls'},{id:'A205',n:'二年04班',ext:'222',t:'cls'},{id:'A204',n:'二年03班',ext:'221',t:'cls'}],
+    '1F':[{id:'A108',n:'靜思閱讀書軒',ext:'215',t:'spc',note:'非營利'},{id:'A107',n:'二年02班',ext:'214',t:'cls'},{id:'A106',n:'二年01班',ext:'213',t:'cls'},{id:'A105',n:'專科教室1',ext:'212',t:'spc',note:'小川堂'},{id:'A104',n:'人事會計',ext:'151/152',t:'off'}]
+  },
+  right:{
+    '5F':[{id:'A501',n:'活動中心',ext:'175',t:'spc'},{id:'A502',n:'準備室',ext:'176',t:'sto'}],
+    '4F':[{id:'A401',n:'家長會',ext:'139',t:'off'},{id:'A402',n:'電腦教室2',ext:'116',t:'lab'},{id:'A403',n:'圖書室',ext:'117',t:'spc'},{id:'A404',n:'電腦教室1',ext:'118',t:'lab'},{id:'A405',n:'主機室',ext:'119',t:'sto'}],
+    '3F':[{id:'A301',n:'校史室',ext:'173',t:'spc'},{id:'A302',n:'e化教室1',sub:'教務處',ext:'115',t:'lab'},{id:'A303',n:'視聽教室',ext:'174',t:'spc'},{id:'A304',n:'輔導處',ext:'141~145',t:'off'}],
+    '2F':[{id:'A201',n:'校長室',ext:'110',t:'off'},{id:'A202',n:'會議室',ext:'172',t:'spc'},{id:'A203',n:'教務處',ext:'111~114',t:'off'}],
+    '1F':[{id:'A101',n:'健康中心',ext:'123/126',t:'off'},{id:'A102',n:'學務處',ext:'121/122',t:'off'},{id:'A103',n:'總務處',ext:'131~137',t:'off'}]
+  }
+},
+C:{floors:['4F','3F','2F','1F','B1'],
+  rooms:{
+    '4F':[{id:'C401',n:'資優班',ext:'545',t:'cls'},{id:'C402',n:'教室',ext:'541',t:'cls'},{id:'C403',n:'教室',ext:'542',t:'cls'},{id:'C404',n:'教室',ext:'543',t:'cls'},{id:'C405',n:'教室',ext:'544',t:'cls'}],
+    '3F':[{id:'C301',n:'資優班',ext:'535',t:'cls'},{id:'C302',n:'教室',ext:'531',t:'cls'},{id:'C303',n:'教室',ext:'532',t:'cls'},{id:'C304',n:'教室',ext:'533',t:'cls'},{id:'C305',n:'教室',ext:'534',t:'cls'}],
+    '2F':[{id:'C201',n:'資優班',ext:'525',t:'cls'},{id:'C202',n:'教室',ext:'521',t:'cls'},{id:'C203',n:'教室',ext:'522',t:'cls'},{id:'C204',n:'教室',ext:'523',t:'cls'},{id:'C205',n:'志工團教室',ext:'524',t:'spc'}],
+    '1F':[{id:'C_np',n:'新莊非營利幼兒園',sub:'07-3500104',ext:'',t:'off',wide:5}],
+    'B1':[{id:'C_bb',n:'桌球教室',ext:'',t:'spc'}]
+  }
+}
 };
 
-// All rooms flat list
-const ROOMS = [
-  // ── 至誠樓 F ──────────────────────────────────
-  {id:'F404',b:'F',f:'4F',n:'五年08班',ext:'844',t:'cls'},
-  {id:'F403',b:'F',f:'4F',n:'五年07班',ext:'843',t:'cls'},
-  {id:'F402',b:'F',f:'4F',n:'五年06班',ext:'842',t:'cls'},
-  {id:'F401',b:'F',f:'4F',n:'樂活教室',ext:'841',t:'spc'},
-  {id:'F304',b:'F',f:'3F',n:'專科教室6',ext:'834',t:'spc'},
-  {id:'F303',b:'F',f:'3F',n:'三年07班',ext:'833',t:'cls'},
-  {id:'F302',b:'F',f:'3F',n:'三年06班',ext:'832',t:'cls'},
-  {id:'F301',b:'F',f:'3F',n:'三年05班',ext:'831',t:'cls'},
-  {id:'F204',b:'F',f:'2F',n:'三年04班',ext:'824',t:'cls'},
-  {id:'F203',b:'F',f:'2F',n:'三年03班',ext:'823',t:'cls'},
-  {id:'F202',b:'F',f:'2F',n:'三年02班',ext:'822',t:'cls'},
-  {id:'F201',b:'F',f:'2F',n:'三年01班',ext:'821',t:'cls'},
-  {id:'F104',b:'F',f:'1F',n:'幼稚班',ext:'814',t:'cls'},
-  {id:'F103',b:'F',f:'1F',n:'幼稚班',ext:'813',t:'cls'},
-  {id:'F102',b:'F',f:'1F',n:'附幼辦公室',ext:'812',t:'off'},
-  {id:'F101',b:'F',f:'1F',n:'教師備課室',ext:'811',t:'spc'},
-  {id:'F_sp', b:'F',f:'1F',n:'學前特教巡迴班',ext:'147',t:'spc'},
-  // ── 至美樓 B ──────────────────────────────────
-  {id:'B506',b:'B',f:'5F',n:'音樂教室2',ext:'356',t:'spc'},
-  {id:'B505',b:'B',f:'5F',n:'準備室',ext:'355',t:'sto'},
-  {id:'B504',b:'B',f:'5F',n:'音樂教室1',ext:'354',t:'spc'},
-  {id:'B503',b:'B',f:'5F',n:'自然教室2',ext:'353',t:'spc'},
-  {id:'B502',b:'B',f:'5F',n:'準備室',ext:'352',t:'sto'},
-  {id:'B501',b:'B',f:'5F',n:'自然教室1',ext:'351',t:'spc'},
-  {id:'B406',b:'B',f:'4F',n:'六年08班',ext:'346',t:'cls'},
-  {id:'B405',b:'B',f:'4F',n:'六年07班',ext:'345',t:'cls'},
-  {id:'B404',b:'B',f:'4F',n:'六年06班',ext:'344',t:'cls'},
-  {id:'B403',b:'B',f:'4F',n:'六年05班',ext:'343',t:'cls'},
-  {id:'B402',b:'B',f:'4F',n:'六年04班',ext:'342',t:'cls'},
-  {id:'B401',b:'B',f:'4F',n:'六年03班',ext:'341',t:'cls'},
-  {id:'B107',b:'B',f:'4F',n:'廚房',ext:'128',t:'sto'},
-  {id:'B306',b:'B',f:'3F',n:'專科教室5',ext:'336',t:'spc'},
-  {id:'B305',b:'B',f:'3F',n:'五年05班',ext:'335',t:'cls'},
-  {id:'B304',b:'B',f:'3F',n:'五年04班',ext:'334',t:'cls'},
-  {id:'B303',b:'B',f:'3F',n:'五年03班',ext:'333',t:'cls'},
-  {id:'B302',b:'B',f:'3F',n:'五年02班',ext:'332',t:'cls'},
-  {id:'B301',b:'B',f:'3F',n:'五年01班',ext:'331',t:'cls'},
-  {id:'B206',b:'B',f:'2F',n:'一年06班',ext:'326',t:'cls'},
-  {id:'B205',b:'B',f:'2F',n:'一年05班',ext:'325',t:'cls'},
-  {id:'B204',b:'B',f:'2F',n:'一年04班',ext:'324',t:'cls'},
-  {id:'B203',b:'B',f:'2F',n:'一年03班',ext:'323',t:'cls'},
-  {id:'B202',b:'B',f:'2F',n:'一年02班',ext:'322',t:'cls'},
-  {id:'B201',b:'B',f:'2F',n:'一年01班',ext:'321',t:'cls'},
-  {id:'B_grd',b:'B',f:'2F',n:'警衛室',ext:'130',t:'off'},
-  {id:'B106',b:'B',f:'1F',n:'體育器材室',ext:'316',t:'sto'},
-  {id:'B105',b:'B',f:'1F',n:'專科教室4',ext:'315',t:'spc'},
-  {id:'B104',b:'B',f:'1F',n:'專科教室3',ext:'314',t:'spc'},
-  {id:'B103',b:'B',f:'1F',n:'專科教室2',ext:'313',t:'spc'},
-  {id:'B102',b:'B',f:'1F',n:'六年02班',ext:'312',t:'cls'},
-  {id:'B101',b:'B',f:'1F',n:'六年01班',ext:'311',t:'cls'},
-  {id:'B_bb', b:'B',f:'B1',n:'桌球教室',ext:'501',t:'spc'},
-  {id:'B_fd', b:'B',f:'2F',n:'幼兒園備餐室',ext:'129',t:'sto'},
-  // ── 至善樓 A ──────────────────────────────────
-  // Left wing (main classrooms)
-  {id:'A507',b:'A',f:'5F',n:'專科教室7',ext:'255',t:'spc'},
-  {id:'A506',b:'A',f:'5F',n:'e化教室4\n(教務處)',ext:'254',t:'lab'},
-  {id:'A505',b:'A',f:'5F',n:'e化教室3\n(總務處)',ext:'253',t:'lab'},
-  {id:'A504',b:'A',f:'5F',n:'點子實驗室',ext:'252',t:'lab'},
-  {id:'A503',b:'A',f:'5F',n:'e化教室2\n(學務處)',ext:'251',t:'lab'},
-  {id:'A411',b:'A',f:'4F',n:'四年09班',ext:'246',t:'cls'},
-  {id:'A410',b:'A',f:'4F',n:'四年08班',ext:'245',t:'cls'},
-  {id:'A409',b:'A',f:'4F',n:'四年07班',ext:'244',t:'cls'},
-  {id:'A408',b:'A',f:'4F',n:'四年06班',ext:'243',t:'cls'},
-  {id:'A407',b:'A',f:'4F',n:'資優班',ext:'242',t:'cls'},
-  {id:'A406',b:'A',f:'4F',n:'e化教室5\n(輔導處)',ext:'241',t:'lab'},
-  {id:'A310',b:'A',f:'3F',n:'四年05班',ext:'236',t:'cls'},
-  {id:'A309',b:'A',f:'3F',n:'四年04班',ext:'235',t:'cls'},
-  {id:'A308',b:'A',f:'3F',n:'四年03班',ext:'234',t:'cls'},
-  {id:'A307',b:'A',f:'3F',n:'資源班3',ext:'233',t:'spc'},
-  {id:'A306',b:'A',f:'3F',n:'資源班2',ext:'232',t:'spc'},
-  {id:'A305',b:'A',f:'3F',n:'資源班1',ext:'231',t:'spc'},
-  {id:'A209',b:'A',f:'2F',n:'四年02班',ext:'226',t:'cls'},
-  {id:'A208',b:'A',f:'2F',n:'四年01班',ext:'225',t:'cls'},
-  {id:'A207',b:'A',f:'2F',n:'二年06班',ext:'224',t:'cls'},
-  {id:'A206',b:'A',f:'2F',n:'二年05班',ext:'223',t:'cls'},
-  {id:'A205',b:'A',f:'2F',n:'二年04班',ext:'222',t:'cls'},
-  {id:'A204',b:'A',f:'2F',n:'二年03班',ext:'221',t:'cls'},
-  {id:'A108',b:'A',f:'1F',n:'靜思閱讀書軒',ext:'215',t:'spc'},
-  {id:'A107',b:'A',f:'1F',n:'二年02班',ext:'214',t:'cls'},
-  {id:'A106',b:'A',f:'1F',n:'二年01班',ext:'213',t:'cls'},
-  {id:'A105',b:'A',f:'1F',n:'專科教室1',ext:'212',t:'spc'},
-  {id:'A104',b:'A',f:'1F',n:'人事會計',ext:'151/152',t:'off'},
-  // Right wing (admin)
-  {id:'A501',b:'A',f:'5F',n:'活動中心',ext:'175',t:'spc'},
-  {id:'A502',b:'A',f:'5F',n:'準備室',ext:'176',t:'sto'},
-  {id:'A401',b:'A',f:'4F',n:'家長會',ext:'139',t:'off'},
-  {id:'A402',b:'A',f:'4F',n:'電腦教室2',ext:'116',t:'lab'},
-  {id:'A403',b:'A',f:'4F',n:'圖書室',ext:'117',t:'spc'},
-  {id:'A404',b:'A',f:'4F',n:'電腦教室1',ext:'118',t:'lab'},
-  {id:'A405',b:'A',f:'4F',n:'主機室',ext:'119',t:'sto'},
-  {id:'A301',b:'A',f:'3F',n:'校史室',ext:'173',t:'spc'},
-  {id:'A302',b:'A',f:'3F',n:'e化教室1\n(教務處)',ext:'115',t:'lab'},
-  {id:'A303',b:'A',f:'3F',n:'視聽教室',ext:'174',t:'spc'},
-  {id:'A304',b:'A',f:'3F',n:'輔導處',ext:'141~145',t:'off'},
-  {id:'A201',b:'A',f:'2F',n:'校長室',ext:'110',t:'off'},
-  {id:'A202',b:'A',f:'2F',n:'會議室',ext:'172',t:'spc'},
-  {id:'A203',b:'A',f:'2F',n:'教務處',ext:'111~114',t:'off'},
-  {id:'A101',b:'A',f:'1F',n:'健康中心',ext:'123/126',t:'off'},
-  {id:'A102',b:'A',f:'1F',n:'學務處',ext:'121/122',t:'off'},
-  {id:'A103',b:'A',f:'1F',n:'總務處',ext:'131~137',t:'off'},
-  // ── 新莊樓 C ──────────────────────────────────
-  {id:'C405',b:'C',f:'4F',n:'教室',ext:'544',t:'cls'},
-  {id:'C404',b:'C',f:'4F',n:'教室',ext:'543',t:'cls'},
-  {id:'C403',b:'C',f:'4F',n:'教室',ext:'542',t:'cls'},
-  {id:'C402',b:'C',f:'4F',n:'教室',ext:'541',t:'cls'},
-  {id:'C401',b:'C',f:'4F',n:'資優班',ext:'545',t:'cls'},
-  {id:'C305',b:'C',f:'3F',n:'教室',ext:'534',t:'cls'},
-  {id:'C304',b:'C',f:'3F',n:'教室',ext:'533',t:'cls'},
-  {id:'C303',b:'C',f:'3F',n:'教室',ext:'532',t:'cls'},
-  {id:'C302',b:'C',f:'3F',n:'教室',ext:'531',t:'cls'},
-  {id:'C301',b:'C',f:'3F',n:'資優班',ext:'535',t:'cls'},
-  {id:'C205',b:'C',f:'2F',n:'志工團教室',ext:'524',t:'spc'},
-  {id:'C204',b:'C',f:'2F',n:'教室',ext:'523',t:'cls'},
-  {id:'C203',b:'C',f:'2F',n:'教室',ext:'522',t:'cls'},
-  {id:'C202',b:'C',f:'2F',n:'教室',ext:'521',t:'cls'},
-  {id:'C201',b:'C',f:'2F',n:'資優班',ext:'525',t:'cls'},
-  {id:'C_np', b:'C',f:'1F',n:'新莊非營利幼兒園\n07-3500104',ext:'',t:'off'},
-  {id:'C_bb', b:'C',f:'B1',n:'桌球教室',ext:'501',t:'spc'},
-];
-
-const PERSONNEL = [
+const PERSONNEL=[
   {id:'p01',title:'校長',def:'A201'},{id:'p02',title:'教務主任',def:'A203'},
   {id:'p03',title:'學務主任',def:'A102'},{id:'p04',title:'總務主任',def:'A103'},
   {id:'p05',title:'輔導主任',def:'A304'},{id:'p06',title:'會計主任',def:'A104'},
@@ -484,13 +347,11 @@ const PERSONNEL = [
   {id:'p25',title:'護理師',def:'A101'},{id:'p26',title:'營養師',def:''},
   {id:'p27',title:'幹事',def:'A103'},{id:'p28',title:'幹事',def:'A103'},
   {id:'p29',title:'技工',def:''},{id:'p30',title:'技工',def:''},
-  {id:'p31',title:'委外',def:''},{id:'p32',title:'委外',def:''},{id:'p33',title:'委外',def:''},
+  {id:'p31',title:'委外',def:''},{id:'p32',title:'委外',def:''},{id:'p33',title:'委外',def:''}
 ];
 
-// ═══════════════════════════════════════════════
-// STORAGE
-// ═══════════════════════════════════════════════
-const SK='xzms4';
+// ── STORAGE ──────────────────────────────────────────────────────────────────
+const SK='xzms5';
 function ld(){try{return JSON.parse(localStorage.getItem(SK))||{r:{},p:{},sw:{},conns:[]}}catch{return{r:{},p:{},sw:{},conns:[]}}}
 function sd(){localStorage.setItem(SK,JSON.stringify(D))}
 let D=ld();
@@ -498,144 +359,90 @@ const gR=id=>D.r[id]||{tpc:'',apOn:true,apIP:'',prt:'',pc1:'',pc2:'',mgmt:'',not
 const gP=id=>D.p[id]||{name:'',ip:'',off:''};
 const gSW=(b,f)=>D.sw[b+'_'+f]||{has:true,ip:''};
 
-// ═══════════════════════════════════════════════
-// VIEW SWITCH
-// ═══════════════════════════════════════════════
+// ── VIEW SWITCH ───────────────────────────────────────────────────────────────
 let curV='plan';
 function sv(v){
   curV=v;
-  document.querySelectorAll('.view').forEach(x=>{x.classList.remove('on');x.style.display='';});
+  document.querySelectorAll('.view').forEach(x=>x.classList.remove('on'));
   document.querySelectorAll('.ntab').forEach(x=>x.classList.remove('on'));
-  const el=document.getElementById('v-'+v);
-  el.classList.add('on');
-  if(v==='net') el.style.display='flex'; // flex needed for net layout
-  document.querySelector(`[data-v="${v}"]`).classList.add('on');
+  document.getElementById('v-'+v).classList.add('on');
+  document.querySelector('[data-v="'+v+'"]').classList.add('on');
   if(v==='net') drawNet();
   if(v==='people') renderPpl();
-  if(v==='search'){setTimeout(()=>document.getElementById('srchIn')?.focus(),80);doSearch('');}
+  if(v==='search'){setTimeout(()=>document.getElementById('srI')?.focus(),80);doSearch('');}
 }
 
-// ═══════════════════════════════════════════════
-// BUILD FLOOR PLAN TABLE (matching PDF layout)
-// Layout: F棟 | B棟 | [spacer] | A棟(left wing) | A棟(right wing) | C棟
-// ═══════════════════════════════════════════════
+// ── BUILD PLAN ────────────────────────────────────────────────────────────────
 function buildPlan(){
-  const floorsF=['4F','3F','2F','1F'];
-  const floorsB=['5F','4F','3F','2F','1F','B1'];
-  const floorsA=['5F','4F','3F','2F','1F'];
-  const floorsC=['4F','3F','2F','1F','B1'];
-  const allFloors=['5F','4F','3F','2F','1F','B1']; // master order top to bottom
-
-  // room lookup
-  const byBF={};
-  ROOMS.forEach(r=>{ const k=r.b+'_'+r.f; if(!byBF[k]) byBF[k]=[]; byBF[k].push(r); });
-
-  // Column counts per building per floor
-  function cols(b,f){ return (byBF[b+'_'+f]||[]).length; }
-
-  // Max cols for each building
-  const maxF=Math.max(...floorsF.map(f=>cols('F',f)));
-  const maxB=Math.max(...floorsB.map(f=>cols('B',f)));
-  // A left wing (A403-A507 side) and right wing
-  const A_left_ids=['A503','A504','A505','A506','A507','A406','A407','A408','A409','A410','A411','A305','A306','A307','A308','A309','A310','A204','A205','A206','A207','A208','A209','A104','A105','A106','A107','A108'];
-  const A_right_ids=['A501','A502','A401','A402','A403','A404','A405','A301','A302','A303','A304','A201','A202','A203','A101','A102','A103'];
-  function aLeftFloor(f){ return ROOMS.filter(r=>r.b==='A'&&r.f===f&&A_left_ids.includes(r.id)); }
-  function aRightFloor(f){ return ROOMS.filter(r=>r.b==='A'&&r.f===f&&A_right_ids.includes(r.id)); }
-  const maxAL=Math.max(...floorsA.map(f=>aLeftFloor(f).length));
-  const maxAR=Math.max(...floorsA.map(f=>aRightFloor(f).length));
-  const maxC=Math.max(...floorsC.map(f=>cols('C',f)));
-
-  let h='<table class="school-table">';
-
-  // Building header row
-  h+=`<tr>
-    <th class="bh bh-F" colspan="${maxF+1}">至誠樓（F棟）</th>
-    <td class="sp" rowspan="99"></td>
-    <th class="bh bh-B" colspan="${maxB+1}">至美樓（B棟）</th>
-    <td class="sp" rowspan="99"></td>
-    <th class="bh bh-A" colspan="${maxAL+maxAR+2}">至善樓（A棟）</th>
-    <td class="sp" rowspan="99"></td>
-    <th class="bh bh-C" colspan="${maxC+1}">新莊樓（C棟）</th>
-  </tr>`;
-
-  // Data rows for each floor
-  allFloors.forEach(floor=>{
-    const Fcells=byBF['F_'+floor]||[];
-    const Bcells=byBF['B_'+floor]||[];
-    const ALcells=aLeftFloor(floor);
-    const ARcells=aRightFloor(floor);
-    const Ccells=byBF['C_'+floor]||[];
-
-    // skip totally empty rows
-    const anyRoom=Fcells.length||Bcells.length||ALcells.length||ARcells.length||Ccells.length;
-    if(!anyRoom) return;
-
-    h+=`<tr>`;
-
-    // ─ F棟 ─
-    h+=`<td class="fl">${floor}</td>`;
-    for(let i=0;i<maxF;i++) h+=i<Fcells.length ? rmCell(Fcells[i]) : emptyCell();
-
-    // ─ B棟 ─
-    h+=`<td class="fl">${floor}</td>`;
-    for(let i=0;i<maxB;i++) h+=i<Bcells.length ? rmCell(Bcells[i]) : emptyCell();
-
-    // ─ A棟 left ─
-    h+=`<td class="fl">${floor}</td>`;
-    for(let i=0;i<maxAL;i++) h+=i<ALcells.length ? rmCell(ALcells[i]) : emptyCell();
-
-    // separator/川堂
-    if(floor==='1F'||floor==='2F'||floor==='3F'||floor==='4F'||floor==='5F'){
-      h+=`<td class="sp-tall" style="min-width:10px;width:10px;background:#e5e7eb"></td>`;
+  const area=document.getElementById('planArea');
+  let h='';
+  const bkeys=['F','B','A','C'];
+  bkeys.forEach(bk=>{
+    const b=PLAN[bk]; const bc=BLDG[bk].col; const bn=BLDG[bk].name;
+    const sw=gSW(bk,'1F');
+    h+=`<div class="bblock b${bk}">`;
+    // Header
+    h+=`<div class="bhdr" style="background:${bc}">`;
+    h+=`${bn}（${bk}棟）`;
+    h+=`<div style="margin-left:auto;display:flex;align-items:center;gap:7px;font-weight:400;font-size:11px">`;
+    h+=`<label style="display:flex;align-items:center;gap:4px;opacity:.9;cursor:pointer"><input type="checkbox" ${sw.has?'checked':''} onchange="setSW('${bk}','1F','has',this.checked)" style="accent-color:#fff"> ⇌ 交換機</label>`;
+    h+=`<input class="swip" value="${sw.ip||''}" placeholder="Switch IP" oninput="setSW('${bk}','1F','ip',this.value)" ${sw.has?'':'disabled'} style="background:rgba(255,255,255,.15);border-color:rgba(255,255,255,.3);color:#fff;::placeholder{color:rgba(255,255,255,.5)}">`;
+    h+=`</div></div>`;
+    // Table
+    h+=`<table class="ftbl">`;
+    if(bk==='A'){
+      // Dual wing: find max cols for each wing
+      const maxL=Math.max(...b.floors.map(f=>(b.left[f]||[]).length));
+      const maxR=Math.max(...b.floors.map(f=>(b.right[f]||[]).length));
+      b.floors.forEach(f=>{
+        const lRooms=b.left[f]||[];
+        const rRooms=b.right[f]||[];
+        h+=`<tr><td class="fl">${f}</td>`;
+        for(let i=0;i<maxL;i++) h+=i<lRooms.length?rmTd(lRooms[i]):ecTd();
+        h+=`<td class="sep" rowspan="1"></td>`;
+        for(let i=0;i<maxR;i++) h+=i<rRooms.length?rmTd(rRooms[i]):ecTd();
+        h+=`</tr>`;
+      });
+      // Switch row
+      h+=`<tr class="swrow"><td></td><td colspan="${maxL+maxR+1}"><div class="sw-cell"><label><input type="checkbox" ${sw.has?'checked':''} onchange="setSW('${bk}','1F','has',this.checked)" style="accent-color:var(--A)"> 本棟交換機</label><input class="swip" value="${sw.ip||''}" placeholder="Switch IP" oninput="setSW('${bk}','1F','ip',this.value)"></div></td></tr>`;
     } else {
-      h+=`<td class="sp-tall" style="min-width:10px;width:10px"></td>`;
+      const maxC=Math.max(...b.floors.map(f=>(b.rooms[f]||[]).length));
+      b.floors.forEach(f=>{
+        const rooms=b.rooms[f]||[];
+        h+=`<tr><td class="fl">${f==='B1'?'B1':f}</td>`;
+        for(let i=0;i<maxC;i++){
+          if(i<rooms.length){
+            const r=rooms[i];
+            if(r.wide) h+=`<td colspan="${r.wide}">${rmDiv(r)}</td>`;
+            else h+=rmTd(r);
+          } else h+=ecTd();
+        }
+        h+=`</tr>`;
+      });
+      h+=`<tr class="swrow"><td></td><td colspan="${maxC}"><div class="sw-cell"><label><input type="checkbox" ${sw.has?'checked':''} onchange="setSW('${bk}','1F','has',this.checked)" style="accent-color:var(--A)"> 本棟交換機</label><input class="swip" value="${sw.ip||''}" placeholder="Switch IP" oninput="setSW('${bk}','1F','ip',this.value)"></div></td></tr>`;
     }
-
-    // ─ A棟 right ─
-    for(let i=0;i<maxAR;i++) h+=i<ARcells.length ? rmCell(ARcells[i]) : emptyCell();
-
-    // ─ C棟 ─
-    h+=`<td class="fl">${floor}</td>`;
-    for(let i=0;i<maxC;i++) h+=i<Ccells.length ? rmCell(Ccells[i]) : emptyCell();
-
-    h+=`</tr>`;
+    h+=`</table></div>`;
   });
-
-  // Switch row
-  h+=`<tr class="sw-row">
-    <td colspan="${maxF+1}"><div class="sw-cell">${swCell('F','1F')}</div></td>
-    <td></td>
-    <td colspan="${maxB+1}"><div class="sw-cell">${swCell('B','1F')}</div></td>
-    <td></td>
-    <td colspan="${maxAL+maxAR+2}"><div class="sw-cell">${swCell('A','1F')}</div></td>
-    <td></td>
-    <td colspan="${maxC+1}"><div class="sw-cell">${swCell('C','1F')}</div></td>
-  </tr>`;
-
-  h+=`</table>`;
-  document.getElementById('planTable').innerHTML=h;
+  area.innerHTML=h;
 }
 
-function rmCell(r){
+function rmTd(r){ return `<td>${rmDiv(r)}</td>`; }
+function ecTd(){ return `<td class="ec"></td>`; }
+function rmDiv(r){
   const rd=gR(r.id);
   const ips=[rd.tpc,rd.pc1,rd.pc2,rd.mgmt,rd.prt].filter(Boolean);
-  const ipDots=ips.map(ip=>`<span class="ipdot f" title="${ip}"></span>`).join('');
-  const apDot=(r.t!=='sto')?(rd.apOn?`<span class="ipdot ap" title="AP${rd.apIP?': '+rd.apIP:'(未設IP)'}"></span>`:`<span class="ipdot e" title="AP停用"></span>`):'';
-  const lines=r.n.split('\n');
-  return `<td><div class="rm ${r.t}" onclick="openRm('${r.id}')">
+  const ipDots=ips.map(ip=>`<span class="dot dot-ip" title="${ip}"></span>`).join('');
+  const apDot=r.t!=='sto'?(rd.apOn?`<span class="dot dot-ap" title="AP${rd.apIP?': '+rd.apIP:''}"></span>`:`<span class="dot dot-e" title="AP停用"></span>`):'';
+  const cls=r.t==='sto'?'rm sto':'rm '+r.t;
+  const onclick=r.t==='sto'?'':` onclick="openRm('${r.id}')"`;
+  return `<div class="${cls}"${onclick}>
     <div class="rm-id">${r.id}</div>
-    <div class="rm-name">${lines[0]}${lines[1]?'<br><span style="font-size:9px;color:var(--text2)">'+lines[1]+'</span>':''}</div>
+    <div class="rm-name">${r.n}</div>
+    ${r.sub?`<div class="rm-sub">${r.sub}</div>`:''}
     ${r.ext?`<div class="rm-ext">☎ ${r.ext}</div>`:''}
-    <div class="rm-ips">${apDot}${ipDots}</div>
-  </div></td>`;
-}
-
-function emptyCell(){ return `<td class="empty" style="min-width:100px;width:100px;height:62px"></td>`; }
-
-function swCell(b,f){
-  const sw=gSW(b,f);
-  return `<label class="sw-lbl"><input type="checkbox" ${sw.has?'checked':''} onchange="setSW('${b}','${f}','has',this.checked)" style="accent-color:var(--A)">⇌ 交換機</label>
-    <input class="sw-ip" value="${sw.ip||''}" placeholder="Switch IP" oninput="setSW('${b}','${f}','ip',this.value)" ${sw.has?'':'disabled'}>`;
+    ${r.note?`<div class="rm-note">${r.note}</div>`:''}
+    <div class="rm-dots">${apDot}${ipDots}</div>
+  </div>`;
 }
 
 function setSW(b,f,k,v){
@@ -643,52 +450,46 @@ function setSW(b,f,k,v){
   D.sw[key][k]=v; sd(); buildPlan();
 }
 
-// ═══════════════════════════════════════════════
-// ROOM MODAL
-// ═══════════════════════════════════════════════
+// ── ROOM MODAL ────────────────────────────────────────────────────────────────
 let curRm=null;
+function allRooms(){
+  const out=[];
+  for(const bk of ['F','B','A','C']){
+    const b=PLAN[bk];
+    if(bk==='A'){
+      for(const f of b.floors){ (b.left[f]||[]).forEach(r=>out.push({...r,bk,f})); (b.right[f]||[]).forEach(r=>out.push({...r,bk,f})); }
+    } else {
+      for(const f of b.floors){ (b.rooms[f]||[]).forEach(r=>out.push({...r,bk,f})); }
+    }
+  }
+  return out;
+}
+
 function openRm(id){
   curRm=id;
-  const r=ROOMS.find(x=>x.id===id); if(!r) return;
+  const r=allRooms().find(x=>x.id===id); if(!r) return;
   const rd=gR(id);
-  document.getElementById('rmTitle').textContent=r.n.replace(/\n/g,' ');
-  document.getElementById('rmMeta').textContent=`${BLDG[r.b].name}（${r.b}棟）${r.f} ｜ ${id}${r.ext?' ｜ ☎ '+r.ext:''}`;
+  document.getElementById('rmTtl').textContent=r.n+(r.sub?' '+r.sub:'');
+  document.getElementById('rmMeta').textContent=`${BLDG[r.bk].name}（${r.bk}棟）${r.f} ｜ ${id}${r.ext?' ｜ ☎ '+r.ext:''}`;
   let h='';
-  if(r.t==='off'){
-    h+=sec('💻 辦公室電腦',[
-      fr('公用PC 1 IP','r_pc1',rd.pc1),fr('公用PC 2 IP','r_pc2',rd.pc2)]);
-  } else if(r.t==='lab'){
-    h+=sec('🖥️ 電腦設備',[fr('管理 IP','r_mgmt',rd.mgmt,'192.168.x.x（代表整間）')]);
-  } else if(r.t!=='sto'){
-    h+=sec('🖥️ 教師電腦',[fr('教師PC IP','r_tpc',rd.tpc)]);
-  }
+  if(r.t==='off') h+=sec('💻 辦公室電腦',[fr('公用PC 1','r_pc1',rd.pc1),fr('公用PC 2','r_pc2',rd.pc2)]);
+  else if(r.t==='lab') h+=sec('🖥️ 電腦設備',[fr('管理 IP','r_mgmt',rd.mgmt,'代表整間')]);
+  else if(r.t!=='sto') h+=sec('🖥️ 教師電腦',[fr('教師PC IP','r_tpc',rd.tpc)]);
   if(r.t!=='sto'){
-    h+=`<div class="fsec">
-      <div class="fsec-t">📡 無線基地台（AP）</div>
-      <div class="frow">
-        <span class="flbl">有無 AP</span>
-        <div class="tog-wrap">
-          <label class="tog"><input type="checkbox" id="r_apOn" ${rd.apOn?'checked':''} onchange="document.getElementById('r_apRow').style.display=this.checked?'flex':'none'"><span class="tog-sl"></span></label>
-          <span style="font-size:12px;color:var(--text2)">本教室已安裝 AP</span>
-        </div>
-      </div>
-      <div class="frow" id="r_apRow" style="display:${rd.apOn?'flex':'none'}">
-        <span class="flbl">AP IP</span><input class="fin" id="r_apIP" value="${rd.apIP||''}" placeholder="192.168.x.x">
-      </div>
+    h+=`<div class="fsec"><div class="fst">📡 無線基地台（AP）</div>
+      <div class="frow"><span class="flbl">有無AP</span><div class="togwrap"><label class="tog"><input type="checkbox" id="r_apOn" ${rd.apOn?'checked':''} onchange="document.getElementById('r_apRow').style.display=this.checked?'flex':'none'"><span class="tsl"></span></label><span style="font-size:11px;color:var(--text2)">本教室已安裝AP</span></div></div>
+      <div class="frow" id="r_apRow" style="display:${rd.apOn?'flex':'none'}"><span class="flbl">AP IP</span><input class="fin" id="r_apIP" value="${rd.apIP||''}" placeholder="192.168.x.x"></div>
     </div>`;
-    h+=sec('🖨️ 印表機 / 其他',[fr('印表機 IP','r_prt',rd.prt)]);
+    h+=sec('🖨️ 印表機/其他',[fr('印表機 IP','r_prt',rd.prt)]);
   }
-  h+=`<div class="fsec"><div class="fsec-t">📝 備註</div>
-    <div class="frow"><textarea class="fin" id="r_note" rows="2" placeholder="備註...">${rd.note||''}</textarea></div>
-  </div>`;
+  h+=`<div class="fsec"><div class="fst">📝 備註</div><div class="frow"><textarea class="fin" id="r_note" rows="2" placeholder="備註...">${rd.note||''}</textarea></div></div>`;
   document.getElementById('rmBody').innerHTML=h;
   document.getElementById('rmOvl').classList.add('on');
 }
-function closeRm(){ document.getElementById('rmOvl').classList.remove('on'); }
-document.getElementById('rmOvl').addEventListener('click',e=>{ if(e.target===document.getElementById('rmOvl')) closeRm(); });
-
+document.getElementById('rmOvl').addEventListener('click',e=>{if(e.target===document.getElementById('rmOvl'))closeRm();});
+function closeRm(){document.getElementById('rmOvl').classList.remove('on');}
 function saveRm(){
-  const r=ROOMS.find(x=>x.id===curRm); if(!r) return;
+  const r=allRooms().find(x=>x.id===curRm); if(!r) return;
   const rd=gR(curRm); const g=i=>(document.getElementById(i)?.value||'').trim();
   if(r.t==='off'){rd.pc1=g('r_pc1');rd.pc2=g('r_pc2');}
   else if(r.t==='lab'){rd.mgmt=g('r_mgmt');}
@@ -696,185 +497,118 @@ function saveRm(){
   if(r.t!=='sto'){const tog=document.getElementById('r_apOn');rd.apOn=tog?tog.checked:true;rd.apIP=g('r_apIP');rd.prt=g('r_prt');}
   rd.note=g('r_note'); D.r[curRm]=rd; sd(); closeRm(); buildPlan();
 }
-function sec(title,rows){ return `<div class="fsec"><div class="fsec-t">${title}</div>${rows.join('')}</div>`; }
-function fr(lbl,id,val,ph='192.168.x.x'){ return `<div class="frow"><span class="flbl">${lbl}</span><input class="fin" id="${id}" value="${val||''}" placeholder="${ph}"></div>`; }
+function sec(t,rows){return `<div class="fsec"><div class="fst">${t}</div>${rows.join('')}</div>`;}
+function fr(lbl,id,val,ph='192.168.x.x'){return `<div class="frow"><span class="flbl">${lbl}</span><input class="fin" id="${id}" value="${val||''}" placeholder="${ph}"></div>`;}
 
-// ═══════════════════════════════════════════════
-// NETWORK DIAGRAM
-// ═══════════════════════════════════════════════
-let netMode='sel', selNode=null, selConn=null, pendNode=null;
+// ── NETWORK DIAGRAM ───────────────────────────────────────────────────────────
+let netMode='sel',selNode=null,selConn=null,pendNode=null;
 const CC={eth:'#58a6ff',fiber:'#f0b429',trunk:'#3fb950',wifi:'#a78bfa',cross:'#f85149'};
-let nBldgFilter=new Set(Object.keys(BLDG));
-
+let nBF=new Set(Object.keys(BLDG));
 function drawNet(){
-  document.getElementById('netBldgFilters').innerHTML=Object.keys(BLDG).map(b=>
-    `<button onclick="toggleNB('${b}',this)" style="padding:2px 8px;border-radius:3px;border:1px solid ${nBldgFilter.has(b)?BLDG[b].col:'#21262d'};background:${nBldgFilter.has(b)?'rgba('+hexRGB(BLDG[b].col)+',0.15)':'none'};color:${nBldgFilter.has(b)?BLDG[b].col:'#484f58'};font-size:10px;cursor:pointer;transition:all .15s;font-family:var(--mono)">${b}</button>`
+  document.getElementById('nbf').innerHTML=Object.keys(BLDG).map(b=>
+    `<button onclick="toggleNB('${b}',this)" style="padding:2px 7px;border-radius:3px;border:1px solid ${nBF.has(b)?BLDG[b].col:'#21262d'};background:${nBF.has(b)?'rgba('+hexRGB(BLDG[b].col)+',0.15)':'none'};color:${nBF.has(b)?BLDG[b].col:'#484f58'};font-size:9px;cursor:pointer;font-family:var(--mono);transition:all .15s">${b}</button>`
   ).join('');
-
-  const svg=document.getElementById('svg-net');
-  svg.innerHTML='';
-  const nW=90,nH=44,gX=110,gY=56,mX=30,mY=40;
-  const rooms=ROOMS.filter(r=>nBldgFilter.has(r.b));
+  const svg=document.getElementById('svgnet'); svg.innerHTML='';
+  const nW=85,nH=40,gX=100,gY=52,mX=28,mY=36;
+  const rooms=allRooms().filter(r=>nBF.has(r.bk));
   const floord=['5F','4F','3F','2F','1F','B1'];
-  const bldgs=Object.keys(BLDG).filter(b=>nBldgFilter.has(b));
-  const nodePos={};
-
-  // Layout: bldg columns, floor rows
-  bldgs.forEach((b,bi)=>{
+  const bkeys=Object.keys(BLDG).filter(b=>nBF.has(b));
+  const np={};
+  bkeys.forEach((b,bi)=>{
     floord.forEach((f,fi)=>{
-      rooms.filter(r=>r.b===b&&r.f===f).forEach((r,ri)=>{
-        nodePos[r.id]={x:mX+bi*(gX*5)+ri*(nW+8),y:mY+fi*gY,w:nW,h:nH,b,f};
+      rooms.filter(r=>r.bk===b&&r.f===f).forEach((r,ri)=>{
+        np[r.id]={x:mX+bi*(nW+gX-nW)*5+ri*(nW+8),y:mY+fi*gY,w:nW,h:nH,b,f};
       });
     });
   });
-
-  const allP=Object.values(nodePos);
-  if(!allP.length){ svg.innerHTML=`<text x="50%" y="50%" text-anchor="middle" fill="#484f58" font-size="13" font-family="Noto Sans TC">請選取要顯示的棟樓</text>`; return; }
+  const allP=Object.values(np); if(!allP.length){svg.innerHTML=`<text x="50%" y="50%" text-anchor="middle" fill="#484f58" font-size="12" font-family="Noto Sans TC">請選取要顯示的棟樓</text>`;return;}
   const svgW=Math.max(...allP.map(p=>p.x+p.w))+mX;
   const svgH=Math.max(...allP.map(p=>p.y+p.h))+mY;
-  svg.setAttribute('viewBox',`0 0 ${svgW} ${svgH}`);
-  svg.style.minWidth=svgW+'px';
-  svg.style.minHeight=svgH+'px';
-
-  // Defs
+  svg.setAttribute('viewBox',`0 0 ${svgW} ${svgH}`); svg.style.minWidth=svgW+'px'; svg.style.minHeight=svgH+'px';
   const defs=se('defs');
-  Object.entries(CC).forEach(([t,c])=>{
-    const m=se('marker',{id:'a'+t,markerWidth:'7',markerHeight:'5',refX:'7',refY:'2.5',orient:'auto'});
-    m.appendChild(se('polygon',{points:'0 0,7 2.5,0 5',fill:c}));
-    defs.appendChild(m);
-  });
+  Object.entries(CC).forEach(([t,c])=>{const m=se('marker',{id:'a'+t,markerWidth:'7',markerHeight:'5',refX:'7',refY:'2.5',orient:'auto'});m.appendChild(se('polygon',{points:'0 0,7 2.5,0 5',fill:c}));defs.appendChild(m);});
   svg.appendChild(defs);
-
-  // Bldg headers
-  bldgs.forEach(b=>{
-    const bRooms=rooms.filter(r=>r.b===b);
-    const bPos=bRooms.map(r=>nodePos[r.id]).filter(Boolean);
-    if(!bPos.length) return;
-    const x0=Math.min(...bPos.map(p=>p.x))-4;
-    const x1=Math.max(...bPos.map(p=>p.x+p.w))+4;
+  bkeys.forEach(b=>{
+    const bR=rooms.filter(r=>r.bk===b); const bP=bR.map(r=>np[r.id]).filter(Boolean); if(!bP.length) return;
+    const x0=Math.min(...bP.map(p=>p.x))-4,x1=Math.max(...bP.map(p=>p.x+p.w))+4;
     const g=se('g');
-    g.appendChild(se('rect',{x:x0,y:4,width:x1-x0,height:28,rx:'3',fill:BLDG[b].col,opacity:'.18'}));
-    const t=se('text',{x:(x0+x1)/2,y:23,'text-anchor':'middle',fill:BLDG[b].col,'font-size':'11','font-weight':'700','font-family':'Noto Sans TC'});
-    t.textContent=BLDG[b].name+'('+b+')'; g.appendChild(t); svg.appendChild(g);
+    g.appendChild(se('rect',{x:x0,y:2,width:x1-x0,height:26,rx:'3',fill:BLDG[b].col,opacity:'.18'}));
+    const t=se('text',{x:(x0+x1)/2,y:20,'text-anchor':'middle',fill:BLDG[b].col,'font-size':'10','font-weight':'700','font-family':'Noto Sans TC'}); t.textContent=BLDG[b].name+'('+b+')'; g.appendChild(t); svg.appendChild(g);
   });
-
-  // Connections
   D.conns.forEach(cn=>{
-    const p1=nodePos[cn.from],p2=nodePos[cn.to]; if(!p1||!p2) return;
-    const c=CC[cn.type]||CC.eth;
-    const g=se('g',{class:'net-conn',id:'cn-'+cn.id,cursor:'pointer'});
+    const p1=np[cn.from],p2=np[cn.to]; if(!p1||!p2) return;
+    const c=CC[cn.type]||CC.eth,isSel=selConn===cn.id;
     const x1=p1.x+p1.w/2,y1=p1.y+p1.h/2,x2=p2.x+p2.w/2,y2=p2.y+p2.h/2;
-    const dash=cn.type==='cross'?'6,4':'none';
-    const isSel=selConn===cn.id;
-    g.appendChild(se('line',{x1,y1,x2,y2,stroke:c,'stroke-width':isSel?3:2,'stroke-dasharray':dash,'marker-end':'url(#a'+cn.type+')'}));
-    if(cn.label||cn.bw){
-      const t=se('text',{x:(x1+x2)/2,y:(y1+y2)/2-6,'text-anchor':'middle',fill:c,'font-size':'8','font-family':'JetBrains Mono'});
-      t.textContent=(cn.label||'')+(cn.bw?' '+cn.bw:'');
-      g.appendChild(t);
-    }
+    const g=se('g',{cursor:'pointer'});
+    g.appendChild(se('line',{x1,y1,x2,y2,stroke:c,'stroke-width':isSel?3:2,'stroke-dasharray':cn.type==='cross'?'6,4':'none','marker-end':'url(#a'+cn.type+')'}));
+    if(cn.label||cn.bw){const t=se('text',{x:(x1+x2)/2,y:(y1+y2)/2-5,'text-anchor':'middle',fill:c,'font-size':'8','font-family':'JetBrains Mono'});t.textContent=(cn.label||'')+(cn.bw?' '+cn.bw:'');g.appendChild(t);}
     g.addEventListener('click',e=>{e.stopPropagation();if(netMode==='sel'){selConn=cn.id;selNode=null;drawNet();}});
     svg.appendChild(g);
   });
-
-  // Nodes
   rooms.forEach(r=>{
-    const pos=nodePos[r.id]; if(!pos) return;
-    const rd=gR(r.id);
-    const hasIP=[rd.tpc,rd.pc1,rd.pc2,rd.mgmt].some(Boolean);
-    const bc=BLDG[r.b].col;
+    const pos=np[r.id]; if(!pos) return;
+    const rd=gR(r.id),hasIP=[rd.tpc,rd.pc1,rd.pc2,rd.mgmt].some(Boolean),bc=BLDG[r.bk].col;
     const isSel=selNode===r.id||pendNode===r.id;
-    const g=se('g',{id:'nd-'+r.id,cursor:'pointer'});
-    g.appendChild(se('rect',{x:pos.x,y:pos.y,width:pos.w,height:pos.h,rx:'4',fill:'#161b22',stroke:isSel?'#f0b429':bc,'stroke-width':isSel?2.5:1.5}));
+    const g=se('g',{cursor:'pointer',id:'nd-'+r.id});
+    g.appendChild(se('rect',{x:pos.x,y:pos.y,width:pos.w,height:pos.h,rx:'3',fill:'#161b22',stroke:isSel?'#f0b429':bc,'stroke-width':isSel?2.5:1.5}));
     g.appendChild(se('rect',{x:pos.x,y:pos.y,width:pos.w,height:3,rx:'2',fill:bc}));
-    const nm=r.n.split('\n')[0]; const nms=nm.length>10?nm.substring(0,9)+'…':nm;
-    const t1=se('text',{x:pos.x+pos.w/2,y:pos.y+17,'text-anchor':'middle',fill:'#c9d1d9','font-size':'9','font-family':'Noto Sans TC'}); t1.textContent=nms; g.appendChild(t1);
-    const t2=se('text',{x:pos.x+3,y:pos.y+pos.h-5,'text-anchor':'start',fill:'#30363d','font-size':'7','font-family':'JetBrains Mono'}); t2.textContent=r.id; g.appendChild(t2);
-    g.appendChild(se('circle',{cx:pos.x+pos.w-7,cy:pos.y+pos.h-7,r:3,fill:hasIP?'#3fb950':'#21262d'}));
-    if(rd.apOn) g.appendChild(se('circle',{cx:pos.x+pos.w-14,cy:pos.y+pos.h-7,r:3,fill:rd.apIP?'#a78bfa':'#21262d'}));
-    g.addEventListener('click',e=>{e.stopPropagation();onNodeClick(r.id);});
+    const nm=r.n.length>10?r.n.substring(0,9)+'…':r.n;
+    const t1=se('text',{x:pos.x+pos.w/2,y:pos.y+16,'text-anchor':'middle',fill:'#c9d1d9','font-size':'8.5','font-family':'Noto Sans TC'}); t1.textContent=nm; g.appendChild(t1);
+    const t2=se('text',{x:pos.x+3,y:pos.y+pos.h-4,'text-anchor':'start',fill:'#30363d','font-size':'7','font-family':'JetBrains Mono'}); t2.textContent=r.id; g.appendChild(t2);
+    g.appendChild(se('circle',{cx:pos.x+pos.w-6,cy:pos.y+pos.h-6,r:2.5,fill:hasIP?'#3fb950':'#21262d'}));
+    if(rd.apOn) g.appendChild(se('circle',{cx:pos.x+pos.w-12,cy:pos.y+pos.h-6,r:2.5,fill:rd.apIP?'#a78bfa':'#21262d'}));
+    g.addEventListener('click',e=>{e.stopPropagation();onNC(r.id);});
     svg.appendChild(g);
   });
-
-  // Floor labels
   floord.forEach(f=>{
-    const fp=Object.values(nodePos).find(p=>p.f===f);
-    if(fp){ const t=se('text',{x:5,y:fp.y+fp.h/2+4,'text-anchor':'start',fill:'#484f58','font-size':'9','font-family':'JetBrains Mono'}); t.textContent=f; svg.appendChild(t); }
+    const fp=Object.values(np).find(p=>p.f===f);
+    if(fp){const t=se('text',{x:4,y:fp.y+fp.h/2+3,'text-anchor':'start',fill:'#484f58','font-size':'8','font-family':'JetBrains Mono'});t.textContent=f;svg.appendChild(t);}
   });
-
-  svg.addEventListener('click',()=>{selNode=null;selConn=null;pendNode=null;document.getElementById('netStatus')&&(document.getElementById('netStatus').textContent='');drawNet();});
+  svg.addEventListener('click',()=>{selNode=null;selConn=null;pendNode=null;nst('');drawNet();});
 }
-
-function toggleNB(b,btn){
-  if(nBldgFilter.has(b)) nBldgFilter.delete(b); else nBldgFilter.add(b);
-  drawNet();
-}
-
-let _netStat=null;
-function showSt(m){ let el=document.getElementById('netStatus'); if(!el){el=document.createElement('div');el.id='netStatus';el.style.cssText='position:absolute;top:8px;left:50%;transform:translateX(-50%);background:rgba(88,166,255,.15);border:1px solid rgba(88,166,255,.4);color:#58a6ff;padding:4px 14px;border-radius:14px;font-size:11px;pointer-events:none;white-space:nowrap;font-family:JetBrains Mono';document.querySelector('.net-area').appendChild(el);} el.textContent=m; }
-
-function onNodeClick(id){
+function toggleNB(b){if(nBF.has(b))nBF.delete(b);else nBF.add(b);drawNet();}
+function nst(m){const el=document.getElementById('nst');el.textContent=m;el.style.opacity=m?'1':'0';}
+function onNC(id){
   if(netMode==='conn'){
-    if(!pendNode){ pendNode=id; selNode=id; drawNet(); showSt('已選：'+id+'　→ 點第二個節點'); }
+    if(!pendNode){pendNode=id;selNode=id;drawNet();nst('已選：'+id+'　→ 點第二個節點');}
     else if(pendNode!==id){
-      document._cnNodes=[pendNode,id];
-      document.getElementById('cnTitle').textContent=pendNode+' ─── '+id;
-      document.getElementById('cnMeta').textContent='';
-      ['cnType','cnLabel','cnBw'].forEach(x=>document.getElementById(x).value='');
+      document._cnN=[pendNode,id]; document.getElementById('cnTtl').textContent=pendNode+' ─── '+id;
+      ['cnType','cnLbl','cnBw'].forEach(x=>document.getElementById(x).value='');
       document.getElementById('cnType').value='eth';
       document.getElementById('cnOvl').classList.add('on');
     }
-  } else { selNode=id; selConn=null; drawNet(); }
+  } else {selNode=id;selConn=null;drawNet();}
 }
-function setMode(m){
-  netMode=m; pendNode=null; selNode=null;
-  ['sel','conn'].forEach(x=>document.getElementById('tb-'+x)?.classList.remove('on'));
-  document.getElementById('tb-'+m)?.classList.add('on');
-  if(m==='conn') showSt('接線模式：點選第一個節點');
-  drawNet();
-}
-function delSel(){
-  if(selConn){ D.conns=D.conns.filter(x=>x.id!==selConn); selConn=null; sd(); }
-  else if(selNode){ selNode=null; }
-  drawNet();
-}
-function closeCn(){ document.getElementById('cnOvl').classList.remove('on'); pendNode=null; selNode=null; drawNet(); }
-function saveCn(){
-  const [a,b]=document._cnNodes||[];
-  if(a&&b) D.conns.push({id:'c'+Date.now(),from:a,to:b,type:document.getElementById('cnType').value,label:document.getElementById('cnLabel').value.trim(),bw:document.getElementById('cnBw').value.trim()});
-  sd(); closeCn(); drawNet();
-}
+function nm(m){netMode=m;pendNode=null;selNode=null;['sel','conn'].forEach(x=>document.getElementById('tb-'+x)?.classList.remove('on'));document.getElementById('tb-'+m)?.classList.add('on');if(m==='conn')nst('接線：點第一個節點');drawNet();}
+function delSel(){if(selConn){D.conns=D.conns.filter(x=>x.id!==selConn);selConn=null;sd();}selNode=null;drawNet();}
+function closeCn(){document.getElementById('cnOvl').classList.remove('on');pendNode=null;selNode=null;drawNet();}
+function saveCn(){const[a,b]=document._cnN||[];if(a&&b)D.conns.push({id:'c'+Date.now(),from:a,to:b,type:document.getElementById('cnType').value,label:document.getElementById('cnLbl').value.trim(),bw:document.getElementById('cnBw').value.trim()});sd();closeCn();drawNet();}
+function se(tag,a={}){const el=document.createElementNS('http://www.w3.org/2000/svg',tag);Object.entries(a).forEach(([k,v])=>el.setAttribute(k,v));return el;}
+function hexRGB(hex){return `${parseInt(hex.slice(1,3),16)},${parseInt(hex.slice(3,5),16)},${parseInt(hex.slice(5,7),16)}`;}
 
-function se(tag,a={}){ const el=document.createElementNS('http://www.w3.org/2000/svg',tag); Object.entries(a).forEach(([k,v])=>el.setAttribute(k,v)); return el; }
-function hexRGB(hex){ const r=parseInt(hex.slice(1,3),16),g=parseInt(hex.slice(3,5),16),b=parseInt(hex.slice(5,7),16); return `${r},${g},${b}`; }
-
-// ═══════════════════════════════════════════════
-// PEOPLE
-// ═══════════════════════════════════════════════
-const offList=ROOMS.filter(r=>r.t==='off').map(r=>({id:r.id,nm:r.n.replace(/\n/g,' ')}));
+// ── PEOPLE ────────────────────────────────────────────────────────────────────
+const offList=allRooms().filter(r=>r.t==='off').map(r=>({id:r.id,nm:r.n}));
 function renderPpl(){
-  document.getElementById('pplBody').innerHTML=PERSONNEL.map(p=>{
-    const pd=gP(p.id); const off=pd.off!==undefined?pd.off:p.def;
+  document.getElementById('pplB').innerHTML=PERSONNEL.map(p=>{
+    const pd=gP(p.id),off=pd.off||p.def;
     const opts=`<option value="">— 未設定 —</option>`+offList.map(o=>`<option value="${o.id}"${off===o.id?' selected':''}>${o.nm}(${o.id})</option>`).join('');
-    return `<tr><td><span class="dot ${pd.ip?'on':'off'}"></span></td><td>${p.title}</td>
-      <td><input style="background:#f9fafb;border:1px solid #e5e7eb;border-radius:3px;padding:3px 5px;font-size:11px;outline:none;width:76px;color:var(--text);font-family:var(--sans)" value="${pd.name||''}" placeholder="姓名" oninput="sPD('${p.id}','name',this.value)"></td>
-      <td><select class="sel-sm" onchange="sPD('${p.id}','off',this.value)">${opts}</select></td>
-      <td><input class="ip-sm" value="${pd.ip||''}" placeholder="192.168.x.x" oninput="sPD('${p.id}','ip',this.value)"></td>
-    </tr>`;
+    return `<tr><td><span class="pdot ${pd.ip?'on':'off'}"></span></td><td>${p.title}</td>
+      <td><input style="background:#f9fafb;border:1px solid var(--border2);border-radius:3px;padding:2px 5px;font-size:11px;outline:none;width:72px;color:var(--text)" value="${pd.name||''}" placeholder="姓名" oninput="sPD('${p.id}','name',this.value)"></td>
+      <td><select class="psel" onchange="sPD('${p.id}','off',this.value)">${opts}</select></td>
+      <td><input class="pip" value="${pd.ip||''}" placeholder="192.168.x.x" oninput="sPD('${p.id}','ip',this.value)"></td></tr>`;
   }).join('');
 }
-function sPD(id,k,v){ if(!D.p[id]) D.p[id]={}; D.p[id][k]=v.trim(); sd(); }
-function exportPpl(){ dlCSV('職稱,姓名,辦公室,電腦IP\n'+PERSONNEL.map(p=>{const d=gP(p.id);return `${p.title},${d.name||''},${d.off||p.def},${d.ip||''}`}).join('\n'),'人員清單.csv'); }
+function sPD(id,k,v){if(!D.p[id])D.p[id]={};D.p[id][k]=v.trim();sd();}
+function exportPpl(){dlCSV('職稱,姓名,辦公室,電腦IP\n'+PERSONNEL.map(p=>{const d=gP(p.id);return `${p.title},${d.name||''},${d.off||p.def},${d.ip||''}`}).join('\n'),'人員清單.csv');}
 
-// ═══════════════════════════════════════════════
-// SEARCH
-// ═══════════════════════════════════════════════
-function hl(t,q){ if(!t||!q) return t||''; return t.replace(new RegExp(q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'),'gi'),m=>`<mark>${m}</mark>`); }
+// ── SEARCH ────────────────────────────────────────────────────────────────────
+function hl(t,q){if(!t||!q)return t||'';return t.replace(new RegExp(q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'),'gi'),m=>`<mark>${m}</mark>`);}
 function doSearch(q){
-  const el=document.getElementById('srchRes');
-  if(!q.trim()){ el.innerHTML='<div style="text-align:center;color:var(--text3);padding:30px;font-size:13px">輸入關鍵字開始搜尋</div>'; return; }
+  const el=document.getElementById('srR');
+  if(!q.trim()){el.innerHTML='<div style="text-align:center;color:var(--text3);padding:26px;font-size:12px">輸入關鍵字開始搜尋</div>';return;}
   q=q.trim().toLowerCase();
   const res=[];
-  ROOMS.forEach(r=>{
+  allRooms().forEach(r=>{
     const rd=gR(r.id);
     const ips=[rd.tpc,rd.pc1,rd.pc2,rd.mgmt,rd.apIP,rd.prt].filter(Boolean);
     const mIP=ips.find(ip=>ip.toLowerCase().includes(q));
@@ -883,52 +617,33 @@ function doSearch(q){
   });
   PERSONNEL.forEach(p=>{
     const pd=gP(p.id);
-    if(p.title.includes(q)||(pd.name||'').includes(q)||(pd.ip||'').toLowerCase().includes(q))
-      res.push({type:'ppl',p,pd});
+    if(p.title.includes(q)||(pd.name||'').includes(q)||(pd.ip||'').toLowerCase().includes(q)) res.push({type:'ppl',p,pd});
   });
-  if(!res.length){ el.innerHTML=`<div style="text-align:center;color:var(--text3);padding:30px">找不到「${q}」的相關結果</div>`; return; }
+  if(!res.length){el.innerHTML=`<div style="text-align:center;color:var(--text3);padding:26px">找不到「${q}」的相關結果</div>`;return;}
   el.innerHTML=res.map(x=>{
-    if(x.type==='room'){
-      const {r,ips,mIP}=x;
-      return `<div class="sr-card" onclick="sv('plan');setTimeout(()=>openRm('${r.id}'),200)">
-        <div><span class="sr-id">${r.id}</span><span class="sr-nm">${hl(r.n.replace(/\n/g,' '),q)}</span>${r.ext?`<span class="sr-ext">☎${r.ext}</span>`:''}</div>
-        ${mIP?`<div class="sr-ip">🎯 ${hl(mIP,q)}</div>`:''}
-        <div class="sr-loc">📍 ${BLDG[r.b].name} ${r.f} ${ips.map(ip=>hl(ip,q)).join(' · ')}</div>
-      </div>`;
-    } else {
-      const {p,pd}=x;
-      const o=ROOMS.find(r=>r.id===(pd.off||p.def));
-      return `<div class="sr-card">
-        <div><span class="sr-id">人員</span><span class="sr-nm">${hl(p.title,q)}${pd.name?' · '+hl(pd.name,q):''}</span></div>
-        ${pd.ip?`<div class="sr-ip">🎯 ${hl(pd.ip,q)}</div>`:''}
-        <div class="sr-loc">📍 ${o?BLDG[o.b].name+' '+o.f+' '+o.n.replace(/\n/g,' '):'辦公室未設定'}</div>
-      </div>`;
-    }
+    if(x.type==='room'){const{r,ips,mIP}=x;return `<div class="scard" onclick="sv('plan');setTimeout(()=>openRm('${r.id}'),200)"><div><span class="sid">${r.id}</span><span class="snm">${hl(r.n,q)}</span>${r.ext?`<span class="sxt">☎${r.ext}</span>`:''}</div>${mIP?`<div class="sip">🎯 ${hl(mIP,q)}</div>`:''}<div class="sloc">📍 ${BLDG[r.bk].name} ${r.f} ${ips.map(ip=>hl(ip,q)).join(' · ')}</div></div>`;}
+    else{const{p,pd}=x;const o=allRooms().find(r=>r.id===(pd.off||p.def));return `<div class="scard"><div><span class="sid">人員</span><span class="snm">${hl(p.title,q)}${pd.name?' · '+hl(pd.name,q):''}</span></div>${pd.ip?`<div class="sip">🎯 ${hl(pd.ip,q)}</div>`:''}<div class="sloc">📍 ${o?BLDG[o.bk].name+' '+o.f+' '+o.n:'辦公室未設定'}</div></div>`;}
   }).join('');
 }
-function qs(v){ if(v.trim()){ sv('search'); document.getElementById('srchIn').value=v; doSearch(v); } }
+function qs(v){if(v.trim()){sv('search');document.getElementById('srI').value=v;doSearch(v);}}
 
-// ═══════════════════════════════════════════════
-// EXPORT
-// ═══════════════════════════════════════════════
+// ── EXPORT ────────────────────────────────────────────────────────────────────
 function exportAll(){
   let csv='IP位址,設備類型,房間名稱,房間代號,棟樓,樓層\n';
-  ROOMS.forEach(r=>{
+  allRooms().forEach(r=>{
     const rd=gR(r.id);
-    const add=(ip,t)=>{ if(ip) csv+=`${ip},${t},${r.n.replace(/\n/g,' ')},${r.id},${BLDG[r.b].name},${r.f}\n`; };
+    const add=(ip,t)=>{if(ip)csv+=`${ip},${t},${r.n},${r.id},${BLDG[r.bk].name},${r.f}\n`;};
     if(r.t==='off'){add(rd.pc1,'PC-1');add(rd.pc2,'PC-2');}
     else if(r.t==='lab'){add(rd.mgmt,'管理IP');}
     else if(r.t!=='sto'){add(rd.tpc,'教師PC');}
-    if(r.t!=='sto'&&rd.apOn) add(rd.apIP,'AP');
+    if(r.t!=='sto'&&rd.apOn)add(rd.apIP,'AP');
     add(rd.prt,'印表機');
   });
   dlCSV(csv,'IP清單.csv');
 }
-function dlCSV(c,fn){ const b=new Blob(['\ufeff'+c],{type:'text/csv;charset=utf-8'}); const a=document.createElement('a'); a.href=URL.createObjectURL(b); a.download=fn; a.click(); }
+function dlCSV(c,fn){const b=new Blob(['\ufeff'+c],{type:'text/csv;charset=utf-8'});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=fn;a.click();}
 
-// ═══════════════════════════════════════════════
-// INIT
-// ═══════════════════════════════════════════════
+// ── INIT ──────────────────────────────────────────────────────────────────────
 buildPlan();
 </script>
 </body>
